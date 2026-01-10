@@ -3,7 +3,8 @@
 
 A highly interactive, immersive 3D developer portfolio built with React, Tailwind CSS, and Framer Motion. It features a "physical desk" interface where users can interact with everyday objects to explore my skills, projects, and contact info.
 
-![Portfolio Preview](/screenshot.png) *(Add a screenshot here later!)*
+![Portfolio Preview](<img width="1872" height="1002" alt="image" src="https://github.com/user-attachments/assets/b11e2396-188f-4343-ab07-73882ea14dff" />
+
 
 ## 🚀 Features
 
