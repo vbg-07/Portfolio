@@ -62,7 +62,7 @@ float fbm(vec2 p) {
   float value = 0.0;
   float amplitude = 0.5;
   float frequency = 1.0;
-  for (int i = 0; i < 4; i++) {
+  for (int i = 0; i < 3; i++) {
     value += amplitude * snoise(p * frequency);
     amplitude *= 0.5;
     frequency *= 2.0;
@@ -192,10 +192,11 @@ export function AuroraShader({
         const canvas = canvasRef.current
         if (!canvas) return
 
-        // Set canvas to full viewport size
+        // Set canvas to full viewport size with reduced resolution for performance
         const resize = () => {
-            canvas.width = window.innerWidth
-            canvas.height = window.innerHeight
+            const scale = Math.min(window.devicePixelRatio, 1) * 0.5 // Reduce resolution by half for performance
+            canvas.width = window.innerWidth * scale
+            canvas.height = window.innerHeight * scale
             if (glRef.current) {
                 glRef.current.viewport(0, 0, canvas.width, canvas.height)
             }

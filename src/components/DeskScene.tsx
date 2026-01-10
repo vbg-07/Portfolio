@@ -52,7 +52,8 @@ export default function DeskScene() {
                 style={{
                     perspective: '1000px',
                     // Pivot around the monitor (top center) when zooming it, otherwise center
-                    transformOrigin: activeItem === 'monitor' ? '50% 20%' : 'center center'
+                    transformOrigin: activeItem === 'monitor' ? '50% 20%' : 'center center',
+                    willChange: 'transform'
                 }}
             >
                 {/* Desk edge glow - scaled with desk */}
@@ -135,7 +136,7 @@ export default function DeskScene() {
                             backgroundClip: 'text',
                             WebkitBackgroundClip: 'text',
                             WebkitTextFillColor: 'transparent',
-                            filter: 'drop-shadow(0 0 25px rgba(0, 212, 255, 0.3)) drop-shadow(0 0 50px rgba(139, 92, 246, 0.1))',
+                            filter: 'drop-shadow(0 0 15px rgba(0, 212, 255, 0.2))',
                         }}
                     >
                         Vignesh
