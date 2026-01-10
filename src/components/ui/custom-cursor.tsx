@@ -1,0 +1,104 @@
+import { useEffect, useState } from 'react'
+import { motion } from 'framer-motion'
+
+interface CursorPosition {
+    x: number
+    y: number
+}
+
+export function CustomCursor() {
+    const [position, setPosition] = useState<CursorPosition>({ x: 0, y: 0 })
+    const [isPointer, setIsPointer] = useState(false)
+    const [isVisible, setIsVisible] = useState(false)
+
+    useEffect(() => {
+        const updatePosition = (e: MouseEvent) => {
+            setPosition({ x: e.clientX, y: e.clientY })
+            setIsVisible(true)
+        }
+
+        const updateCursorType = () => {
+            const hoveredElement = document.elementFromPoint(position.x, position.y)
+            if (hoveredElement) {
+                const computedStyle = window.getComputedStyle(hoveredElement)
+                const isClickable =
+                    computedStyle.cursor === 'pointer' ||
+                    hoveredElement.tagName === 'BUTTON' ||
+                    hoveredElement.tagName === 'A' ||
+                    hoveredElement.closest('button') ||
+                    hoveredElement.closest('a')
+                setIsPointer(!!isClickable)
+            }
+        }
+
+        const handleMouseLeave = () => setIsVisible(false)
+        const handleMouseEnter = () => setIsVisible(true)
+
+        window.addEventListener('mousemove', updatePosition)
+        window.addEventListener('mouseover', updateCursorType)
+        document.addEventListener('mouseleave', handleMouseLeave)
+        document.addEventListener('mouseenter', handleMouseEnter)
+
+        return () => {
+            window.removeEventListener('mousemove', updatePosition)
+            window.removeEventListener('mouseover', updateCursorType)
+            document.removeEventListener('mouseleave', handleMouseLeave)
+            document.removeEventListener('mouseenter', handleMouseEnter)
+        }
+    }, [position.x, position.y])
+
+    if (!isVisible) return null
+
+    return (
+        <>
+            {/* Main cursor dot */}
+            <motion.div
+                className="fixed pointer-events-none z-[9999] mix-blend-difference"
+                animate={{
+                    x: position.x - 6,
+                    y: position.y - 6,
+                    scale: isPointer ? 1.5 : 1,
+                }}
+                transition={{
+                    type: 'spring',
+                    stiffness: 500,
+                    damping: 28,
+                    mass: 0.5,
+                }}
+            >
+                <div
+                    className="w-3 h-3 rounded-full"
+                    style={{
+                        background: 'linear-gradient(135deg, #00d4ff, #8b5cf6)',
+                        boxShadow: '0 0 10px rgba(0, 212, 255, 0.5)',
+                    }}
+                />
+            </motion.div>
+
+            {/* Trailing ring */}
+            <motion.div
+                className="fixed pointer-events-none z-[9998]"
+                animate={{
+                    x: position.x - 20,
+                    y: position.y - 20,
+                    scale: isPointer ? 1.4 : 1,
+                    opacity: isPointer ? 0.8 : 0.4,
+                }}
+                transition={{
+                    type: 'spring',
+                    stiffness: 150,
+                    damping: 15,
+                    mass: 0.8,
+                }}
+            >
+                <div
+                    className="w-10 h-10 rounded-full border"
+                    style={{
+                        borderColor: 'rgba(0, 212, 255, 0.5)',
+                        borderWidth: isPointer ? '2px' : '1px',
+                    }}
+                />
+            </motion.div>
+        </>
+    )
+}
