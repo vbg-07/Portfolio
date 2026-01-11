@@ -46,7 +46,7 @@ const projects = [
         description: 'An interactive portfolio featuring a top-down engineering workstation aesthetic with zoom-to-object interactions and tech-blue theme.',
         metrics: ['Framer Motion', 'Recharts', 'Responsive design'],
         tags: ['React', 'TypeScript', 'Tailwind CSS', 'Vite'],
-        link: 'https://github.com/vbg-07/portfolio-vbg',
+        link: 'https://github.com/vbg-07/Portfolio',
         features: [
             'Interactive desk elements with hover effects',
             'Modal system for expanded content',
@@ -69,7 +69,7 @@ export default function MonitorContent() {
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                     {[
-                        { label: 'GitHub Repos', value: '2', change: 'Public', positive: true },
+                        { label: 'GitHub Repos', value: '3', change: 'Public', positive: true },
                         { label: 'Primary Stack', value: 'AWS', change: 'Cloud Native', positive: true },
                         { label: 'Focus Area', value: 'AI/ML', change: 'Serverless', positive: true },
                     ].map((stat, i) => (
