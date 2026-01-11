@@ -28,11 +28,20 @@ function App() {
   const [activeItem, setActiveItem] = useState<DeskItemType>(null)
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
 
-  // Handle resize
+  // Handle resize with debounce
   useState(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 768)
+    let timeoutId: number
+    const handleResize = () => {
+      clearTimeout(timeoutId)
+      timeoutId = window.setTimeout(() => {
+        setIsMobile(window.innerWidth < 768)
+      }, 150)
+    }
     window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
+    return () => {
+      window.removeEventListener('resize', handleResize)
+      clearTimeout(timeoutId)
+    }
   })
 
   return (

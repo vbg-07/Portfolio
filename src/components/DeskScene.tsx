@@ -13,22 +13,23 @@ export default function DeskScene() {
 
     // Variants for the desk zoom effect
     const deskVariants: Variants = {
-        initial: { opacity: 0, scale: 0.9, y: 0 },
+        initial: { opacity: 0, scale: 0.95, y: 0 }, // Scale 0.95 instead of 0.9 to be less "deep"
         animate: {
             opacity: 1,
             scale: 1,
             y: 0,
             x: 0,
-            transition: { duration: 1.5, ease: [0.4, 0, 0.2, 1] }
+            // Spring transition for smoother "landing" when zooming out
+            transition: { type: "spring", stiffness: 100, damping: 20, mass: 1.2 }
         },
         monitorOpen: {
-            scale: 6,
-            y: "160%", // Center the monitor (which is at top of desk) in the viewport
+            scale: 5.5, // Slightly reduced from 6 to be less extreme
+            y: "150%",
             x: 0,
-            transition: { duration: 1.5, ease: [0.4, 0, 0.2, 1] }
+            transition: { duration: 1.2, ease: [0.4, 0, 0.2, 1] }
         },
         defaultOpen: {
-            scale: 1, // Keep scale 1 for others or customize
+            scale: 1,
             opacity: 0.3,
             transition: { duration: 0.5 }
         }
