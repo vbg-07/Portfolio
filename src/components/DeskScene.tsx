@@ -13,7 +13,7 @@ export default function DeskScene() {
 
     // Variants for the desk zoom effect
     const deskVariants: Variants = {
-        initial: { opacity: 0, scale: 1, y: 0 },
+        initial: { opacity: 1, scale: 1, y: 0 }, // Opacity 1 for instant LCP
         animate: {
             opacity: 1,
             scale: 1,
