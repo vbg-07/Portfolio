@@ -13,20 +13,20 @@ export default function DeskScene() {
 
     // Variants for the desk zoom effect
     const deskVariants: Variants = {
-        initial: { opacity: 0, scale: 0.95, y: 0 }, // Scale 0.95 instead of 0.9 to be less "deep"
+        initial: { opacity: 0, scale: 0.95, y: 0 },
         animate: {
             opacity: 1,
             scale: 1,
             y: 0,
             x: 0,
-            // Spring transition for smoother "landing" when zooming out
-            transition: { type: "spring", stiffness: 100, damping: 20, mass: 1.2 }
+            transition: { duration: 1.5, ease: [0.4, 0, 0.2, 1] }
         },
+        // Removed specific monitor zoom to keep it light
         monitorOpen: {
-            scale: 5.5, // Slightly reduced from 6 to be less extreme
-            y: "150%",
+            scale: 1, // No zoom
+            y: 0,
             x: 0,
-            transition: { duration: 1.2, ease: [0.4, 0, 0.2, 1] }
+            transition: { duration: 0.5 }
         },
         defaultOpen: {
             scale: 1,
@@ -38,6 +38,8 @@ export default function DeskScene() {
     // Determine which animation state to use
     const getAnimationState = () => {
         if (!activeItem) return 'animate'
+        // We still return a state to handle opacity changes if needed, 
+        // but 'monitorOpen' now just keeps scale 1
         if (activeItem === 'monitor') return 'monitorOpen'
         return 'defaultOpen'
     }

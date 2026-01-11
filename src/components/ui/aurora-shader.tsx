@@ -57,12 +57,16 @@ float snoise(vec2 v) {
   return 130.0 * dot(m, g);
 }
 
-// Optimized FBM - only 2 octaves instead of loop
+// Fractal Brownian Motion for smoother noise
 float fbm(vec2 p) {
   float value = 0.0;
-  value += 0.5 * snoise(p);
-  p *= 2.0;
-  value += 0.25 * snoise(p);
+  float amplitude = 0.5;
+  float frequency = 1.0;
+  for (int i = 0; i < 3; i++) {
+    value += amplitude * snoise(p * frequency);
+    amplitude *= 0.5;
+    frequency *= 2.0;
+  }
   return value;
 }
 
@@ -70,29 +74,37 @@ void main() {
   vec2 uv = gl_FragCoord.xy / u_resolution.xy;
   float t = u_time * u_speed;
   
-  // Simplified noise layers
-  float noise1 = fbm(uv * 1.5 + vec2(t * 0.1, t * 0.05));
-  float noise2 = fbm(uv * 1.0 + vec2(-t * 0.05, t * 0.08));
+  // Create smooth flowing noise layers
+  float noise1 = fbm(uv * 2.0 + vec2(t * 0.1, t * 0.05));
+  float noise2 = fbm(uv * 1.5 + vec2(-t * 0.08, t * 0.12));
+  float noise3 = fbm(uv * 3.0 + vec2(t * 0.05, -t * 0.03));
   
-  // Combine
-  float combinedNoise = (noise1 + noise2) * 0.5;
-  combinedNoise = smoothstep(-0.2, 0.8, combinedNoise);
+  // Combine noise layers with smooth blending
+  float combinedNoise = (noise1 * 0.5 + noise2 * 0.3 + noise3 * 0.2);
+  combinedNoise = smoothstep(-0.5, 0.8, combinedNoise);
   
-  // Simple moving glows
-  vec2 center1 = vec2(0.5 + sin(t * 0.3) * 0.2, 0.5 + cos(t * 0.2) * 0.2);
+  // Create subtle glow spots
+  vec2 center1 = vec2(0.3 + sin(t * 0.2) * 0.1, 0.4 + cos(t * 0.15) * 0.1);
+  vec2 center2 = vec2(0.7 + cos(t * 0.18) * 0.1, 0.6 + sin(t * 0.22) * 0.1);
   
-  float dist = length(uv - center1);
-  float glow = 1.0 - smoothstep(0.0, 0.6, dist);
+  float glow1 = 1.0 - smoothstep(0.0, 0.5, length(uv - center1));
+  float glow2 = 1.0 - smoothstep(0.0, 0.4, length(uv - center2));
   
+  // Mix colors based on noise and position
   vec3 color = u_colorBackground;
   
-  // Efficient mixing
-  vec3 mixColor = mix(u_colorPrimary, u_colorSecondary, uv.y + sin(t * 0.2) * 0.2);
-  color = mix(color, mixColor, (glow * 0.4 + combinedNoise * 0.1) * u_intensity);
+  // Add primary color glow
+  color = mix(color, u_colorPrimary, glow1 * 0.15 * u_intensity);
   
-  // Vignette
-  float vignette = 1.0 - smoothstep(0.5, 1.5, length(uv - 0.5) * 1.5);
-  color *= vignette;
+  // Add secondary color glow  
+  color = mix(color, u_colorSecondary, glow2 * 0.1 * u_intensity);
+  
+  // Add subtle noise-based color variation
+  color = mix(color, u_colorPrimary, combinedNoise * 0.08 * u_intensity);
+  
+  // Add very subtle vignette
+  float vignette = 1.0 - smoothstep(0.5, 1.5, length(uv - 0.5) * 1.2);
+  color *= 0.95 + vignette * 0.05;
   
   fragColor = vec4(color, 1.0);
 }
