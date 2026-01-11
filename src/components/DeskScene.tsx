@@ -13,13 +13,13 @@ export default function DeskScene() {
 
     // Variants for the desk zoom effect
     const deskVariants: Variants = {
-        initial: { opacity: 0, scale: 0.95, y: 0 },
+        initial: { opacity: 0, scale: 1, y: 0 },
         animate: {
             opacity: 1,
             scale: 1,
             y: 0,
             x: 0,
-            transition: { duration: 1.5, ease: [0.4, 0, 0.2, 1] }
+            transition: { duration: 0 } // Instant, no floaty animation
         },
         // Removed specific monitor zoom to keep it light
         monitorOpen: {

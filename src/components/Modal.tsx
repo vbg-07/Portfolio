@@ -62,10 +62,10 @@ export default function Modal() {
             {/* Modal content */}
             <motion.div
                 className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto glass-card p-8"
-                initial={{ scale: 0.8, opacity: 0, y: 50 }}
-                animate={{ scale: 1, opacity: 1, y: 0 }}
-                exit={{ scale: 0.8, opacity: 0, y: 50 }}
-                transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
                 onClick={(e) => e.stopPropagation()}
             >
                 {/* Close button */}
