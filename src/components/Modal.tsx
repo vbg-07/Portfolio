@@ -81,7 +81,7 @@ export default function Modal() {
                 {/* Header */}
                 <div className="mb-6">
                     <h2 className="text-3xl font-bold text-gradient-blue">{getTitle()}</h2>
-                    <div className="mt-2 w-20 h-1 bg-gradient-to-r from-tech-blue-500 to-accent-purple rounded-full" />
+
                 </div>
 
                 {/* Dynamic content */}

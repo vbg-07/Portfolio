@@ -139,7 +139,7 @@ export default function DeskScene() {
                             backgroundClip: 'text',
                             WebkitBackgroundClip: 'text',
                             WebkitTextFillColor: 'transparent',
-                            filter: 'drop-shadow(0 0 15px rgba(0, 212, 255, 0.2))',
+                            filter: 'drop-shadow(0 0 30px rgba(0, 212, 255, 0.5)) drop-shadow(0 0 10px rgba(0, 212, 255, 0.3))',
                         }}
                     >
                         Vignesh
