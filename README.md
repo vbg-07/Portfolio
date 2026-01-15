@@ -9,9 +9,10 @@ A highly interactive, immersive 3D developer portfolio built with React, Tailwin
 ## 🚀 Features
 
 -   **Interactive Desk Interface**: Clickable items (Monitor, Phone, Coffee Cup, Server Rack, Blueprints) that act as navigation.
+-   **Theme Toggle**: Switch between Dark and Light monochrome themes using the articulated Desk Lamp.
 -   **Immersive Zoom Animations**: Seamless "entering the screen" transitions when interacting with the monitor.
 -   **Real-time Contact Form**: Fully functional contact terminal powered by **EmailJS** with custom error handling.
--   **Dynamic Background**: Smooth Aurora Borealis shader background.
+-   **Dynamic Background**: Smooth Aurora Borealis shader background that adapts to the active theme.
 -   **3D Tilt Effects**: Elements react to mouse movement for a pseudo-3D feel.
 -   **Responsive Design**: Falls back to a mobile-friendly "Command Dashboard" on smaller screens.
 

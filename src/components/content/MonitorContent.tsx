@@ -43,7 +43,7 @@ const projects = [
     },
     {
         title: 'Physical Desk Portfolio',
-        description: 'An interactive portfolio featuring a top-down engineering workstation aesthetic with zoom-to-object interactions and tech-blue theme.',
+        description: 'An interactive portfolio featuring a top-down engineering workstation aesthetic with zoom-to-object interactions and monochrome theme (Light/Dark).',
         metrics: ['Framer Motion', 'Recharts', 'Responsive design'],
         tags: ['React', 'TypeScript', 'Tailwind CSS', 'Vite'],
         link: 'https://github.com/vbg-07/Portfolio',
