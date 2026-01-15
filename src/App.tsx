@@ -50,9 +50,9 @@ function App() {
         {/* Smooth aurora shader background */}
         <div className="fixed inset-0 pointer-events-none">
           <AuroraShader
-            colorPrimary="#00d4ff"
-            colorSecondary="#8b5cf6"
-            colorBackground="#0c1218"
+            colorPrimary="#e9ecef"
+            colorSecondary="#adb5bd"
+            colorBackground="#050505"
             speed={0.4}
             intensity={1.1}
           />

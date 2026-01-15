@@ -2,12 +2,13 @@ import { motion } from 'framer-motion'
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Tooltip, Cell } from 'recharts'
 
 // QuestGage-style confusion data by concept
+// QuestGage-style confusion data by concept
 const confusionData = [
-    { concept: 'Newton\'s Laws', confusion: 78, color: '#ef4444' },
-    { concept: 'Momentum', confusion: 45, color: '#f59e0b' },
-    { concept: 'Energy', confusion: 32, color: '#22c55e' },
-    { concept: 'Friction', confusion: 61, color: '#f59e0b' },
-    { concept: 'Gravity', confusion: 25, color: '#22c55e' },
+    { concept: 'Newton\'s Laws', confusion: 78, color: '#495057' },
+    { concept: 'Momentum', confusion: 45, color: '#adb5bd' },
+    { concept: 'Energy', confusion: 32, color: '#dee2e6' },
+    { concept: 'Friction', confusion: 61, color: '#adb5bd' },
+    { concept: 'Gravity', confusion: 25, color: '#dee2e6' },
 ]
 
 export default function Monitor() {
@@ -22,12 +23,12 @@ export default function Monitor() {
                         {/* Dashboard header - QuestGage style */}
                         <div className="flex items-center justify-between mb-2">
                             <div className="flex items-center gap-2">
-                                <div className="w-2 h-2 rounded-full bg-accent-green animate-pulse" />
-                                <span className="text-[8px] font-mono text-tech-blue-400 uppercase tracking-wider">QuestGage Analytics</span>
+                                <div className="w-2 h-2 rounded-full bg-gray-400 animate-pulse" />
+                                <span className="text-[8px] font-mono text-gray-300 uppercase tracking-wider">QuestGage Analytics</span>
                             </div>
                             <div className="flex gap-1 items-center">
                                 <span className="text-[6px] text-gray-500">LIVE</span>
-                                <div className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
+                                <div className="w-1.5 h-1.5 rounded-full bg-gray-500 animate-pulse" />
                             </div>
                         </div>
 
@@ -45,7 +46,7 @@ export default function Monitor() {
                                     <Tooltip
                                         contentStyle={{
                                             backgroundColor: '#151c28',
-                                            border: '1px solid rgba(0, 212, 255, 0.3)',
+                                            border: '1px solid rgba(255, 255, 255, 0.1)',
                                             borderRadius: '8px',
                                             fontSize: '10px'
                                         }}
@@ -72,15 +73,15 @@ export default function Monitor() {
                                 transition={{ duration: 2, repeat: Infinity }}
                             >
                                 <div className="text-[6px] text-gray-500">STUDENTS</div>
-                                <div className="text-[10px] font-bold text-accent-green">24</div>
+                                <div className="text-[10px] font-bold text-gray-300">24</div>
                             </motion.div>
                             <div className="text-center">
                                 <div className="text-[6px] text-gray-500">ALERTS</div>
-                                <div className="text-[10px] font-bold text-red-400">3</div>
+                                <div className="text-[10px] font-bold text-gray-400">3</div>
                             </div>
                             <div className="text-center">
                                 <div className="text-[6px] text-gray-500">AVG CONF</div>
-                                <div className="text-[10px] font-bold text-accent-amber">48%</div>
+                                <div className="text-[10px] font-bold text-gray-300">48%</div>
                             </div>
                         </div>
                     </div>
@@ -89,7 +90,7 @@ export default function Monitor() {
                 {/* Screen glow */}
                 <div className="absolute inset-0 opacity-20 pointer-events-none"
                     style={{
-                        background: 'radial-gradient(ellipse at center, rgba(0, 212, 255, 0.3) 0%, transparent 70%)'
+                        background: 'radial-gradient(ellipse at center, rgba(255, 255, 255, 0.1) 0%, transparent 70%)'
                     }}
                 />
             </div>

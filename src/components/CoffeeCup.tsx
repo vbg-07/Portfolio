@@ -28,10 +28,10 @@ export default function CoffeeCup() {
             {/* Cup body */}
             <div className="relative w-[70%] h-[65%] mt-4">
                 {/* Cup */}
-                <div className="absolute inset-0 bg-gradient-to-b from-stone-700 to-stone-800 rounded-b-3xl rounded-t-lg shadow-lg overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-b from-gray-700 to-gray-800 rounded-b-3xl rounded-t-lg shadow-lg overflow-hidden">
                     {/* Coffee surface */}
-                    <div className="absolute top-2 left-2 right-2 h-4 bg-gradient-to-br from-amber-900 to-amber-950 rounded-full">
-                        <div className="absolute top-1 left-1/4 w-1/2 h-1 bg-amber-800/50 rounded-full blur-sm" />
+                    <div className="absolute top-2 left-2 right-2 h-4 bg-gradient-to-br from-gray-900 to-black rounded-full">
+                        <div className="absolute top-1 left-1/4 w-1/2 h-1 bg-gray-600/50 rounded-full blur-sm" />
                     </div>
 
                     {/* Cup texture */}
@@ -44,20 +44,20 @@ export default function CoffeeCup() {
 
                 {/* Handle */}
                 <div className="absolute right-[-15%] top-[20%] w-[20%] h-[50%]">
-                    <div className="w-full h-full border-4 border-stone-700 rounded-full border-l-0" />
+                    <div className="w-full h-full border-4 border-gray-700 rounded-full border-l-0" />
                 </div>
 
                 {/* Cup rim */}
-                <div className="absolute -top-1 left-0 right-0 h-2 bg-stone-600 rounded-t-lg" />
+                <div className="absolute -top-1 left-0 right-0 h-2 bg-gray-600 rounded-t-lg" />
             </div>
 
             {/* Saucer */}
-            <div className="absolute bottom-[5%] left-1/2 -translate-x-1/2 w-[90%] h-[15%] bg-gradient-to-b from-stone-600 to-stone-700 rounded-full shadow-md">
-                <div className="absolute inset-1 bg-stone-700 rounded-full" />
+            <div className="absolute bottom-[5%] left-1/2 -translate-x-1/2 w-[90%] h-[15%] bg-gradient-to-b from-gray-600 to-gray-700 rounded-full shadow-md">
+                <div className="absolute inset-1 bg-gray-700 rounded-full" />
             </div>
 
             {/* Subtle glow */}
-            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[80%] h-4 bg-amber-600/10 blur-xl rounded-full" />
+            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[80%] h-4 bg-white/5 blur-xl rounded-full" />
         </div>
     )
 }

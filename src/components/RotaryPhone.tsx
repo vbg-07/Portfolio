@@ -66,7 +66,7 @@ export default function RotaryPhone() {
 
                 {/* Subtle ring indicator */}
                 <motion.div
-                    className="absolute top-2 right-2 w-2 h-2 rounded-full bg-accent-amber"
+                    className="absolute top-2 right-2 w-2 h-2 rounded-full bg-gray-400"
                     animate={{ opacity: [0.3, 1, 0.3] }}
                     transition={{ duration: 1.5, repeat: Infinity }}
                 />

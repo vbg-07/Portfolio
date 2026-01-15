@@ -60,15 +60,15 @@ export default function DeskScene() {
                 }}
             >
                 {/* Desk edge glow - scaled with desk */}
-                <div className="absolute inset-0 rounded-3xl border border-tech-blue-800/20 pointer-events-none" />
+                <div className="absolute inset-0 rounded-3xl border border-white/10 pointer-events-none" />
                 <div className="absolute inset-0 rounded-3xl shadow-inner-glow pointer-events-none" />
 
                 {/* Grid overlay for tech feel */}
                 <div className="absolute inset-0 rounded-3xl opacity-30 pointer-events-none"
                     style={{
                         backgroundImage: `
-              linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px)
+              linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px)
             `,
                         backgroundSize: '40px 40px'
                     }}
@@ -134,12 +134,12 @@ export default function DeskScene() {
                             fontFamily: "'Outfit', sans-serif",
                             lineHeight: 1.2,
                             color: 'transparent',
-                            backgroundImage: 'linear-gradient(135deg, rgba(0, 212, 255, 0.7) 0%, rgba(0, 102, 255, 0.5) 35%, rgba(139, 92, 246, 0.6) 65%, rgba(0, 212, 255, 0.7) 100%)',
+                            backgroundImage: 'linear-gradient(135deg, rgba(255, 255, 255, 0.7) 0%, rgba(173, 181, 189, 0.5) 35%, rgba(108, 117, 125, 0.6) 65%, rgba(255, 255, 255, 0.7) 100%)',
                             backgroundSize: '300% 300%',
                             backgroundClip: 'text',
                             WebkitBackgroundClip: 'text',
                             WebkitTextFillColor: 'transparent',
-                            filter: 'drop-shadow(0 0 30px rgba(0, 212, 255, 0.5)) drop-shadow(0 0 10px rgba(0, 212, 255, 0.3))',
+                            filter: 'drop-shadow(0 0 30px rgba(255, 255, 255, 0.3)) drop-shadow(0 0 10px rgba(255, 255, 255, 0.1))',
                         }}
                     >
                         Vignesh
@@ -147,8 +147,8 @@ export default function DeskScene() {
                 </div>
 
                 {/* Decorative elements */}
-                <div className="absolute top-[50%] left-[50%] w-3 h-3 rounded-full bg-accent-green/60 blur-sm animate-pulse" />
-                <div className="absolute top-[60%] left-[40%] w-2 h-2 rounded-full bg-tech-blue-400/40 blur-sm" />
+                <div className="absolute top-[50%] left-[50%] w-3 h-3 rounded-full bg-gray-400/60 blur-sm animate-pulse" />
+                <div className="absolute top-[60%] left-[40%] w-2 h-2 rounded-full bg-white/40 blur-sm" />
             </motion.div>
 
             {/* Instructions */}
@@ -159,7 +159,7 @@ export default function DeskScene() {
                 className="absolute bottom-8 left-1/2 -translate-x-1/2 text-center"
             >
                 <p className="text-gray-500 text-sm font-mono">
-                    <span className="text-tech-blue-400">»</span> Click any item to explore <span className="text-tech-blue-400">«</span>
+                    <span className="text-gray-400">»</span> Click any item to explore <span className="text-gray-400">«</span>
                 </p>
             </motion.div>
         </div>
