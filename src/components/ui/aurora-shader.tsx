@@ -93,14 +93,14 @@ void main() {
   // Mix colors based on noise and position
   vec3 color = u_colorBackground;
   
-  // Add primary color glow
-  color = mix(color, u_colorPrimary, glow1 * 0.15 * u_intensity);
+  // Add primary color glow (increased for visibility)
+  color = mix(color, u_colorPrimary, glow1 * 0.25 * u_intensity);
   
-  // Add secondary color glow  
-  color = mix(color, u_colorSecondary, glow2 * 0.1 * u_intensity);
+  // Add secondary color glow (increased for visibility)
+  color = mix(color, u_colorSecondary, glow2 * 0.18 * u_intensity);
   
-  // Add subtle noise-based color variation
-  color = mix(color, u_colorPrimary, combinedNoise * 0.08 * u_intensity);
+  // Add subtle noise-based color variation (increased for visibility)
+  color = mix(color, u_colorPrimary, combinedNoise * 0.12 * u_intensity);
   
   // Add very subtle vignette
   float vignette = 1.0 - smoothstep(0.5, 1.5, length(uv - 0.5) * 1.2);

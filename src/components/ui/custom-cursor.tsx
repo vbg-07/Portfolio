@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
+import { useTheme } from '../../contexts/ThemeContext'
 
 interface CursorPosition {
     x: number
@@ -10,6 +11,7 @@ export function CustomCursor() {
     const [position, setPosition] = useState<CursorPosition>({ x: 0, y: 0 })
     const [isPointer, setIsPointer] = useState(false)
     const [isVisible, setIsVisible] = useState(false)
+    const { isLight } = useTheme()
 
     useEffect(() => {
         const updatePosition = (e: MouseEvent) => {
@@ -69,8 +71,12 @@ export function CustomCursor() {
                 <div
                     className="w-3 h-3 rounded-full"
                     style={{
-                        background: 'linear-gradient(135deg, #ffffff, #adb5bd)',
-                        boxShadow: '0 0 10px rgba(255, 255, 255, 0.4)',
+                        background: isLight
+                            ? 'linear-gradient(135deg, #212529, #495057)'
+                            : 'linear-gradient(135deg, #ffffff, #adb5bd)',
+                        boxShadow: isLight
+                            ? '0 0 10px rgba(0, 0, 0, 0.4)'
+                            : '0 0 10px rgba(255, 255, 255, 0.4)',
                     }}
                 />
             </motion.div>
@@ -94,7 +100,7 @@ export function CustomCursor() {
                 <div
                     className="w-10 h-10 rounded-full border"
                     style={{
-                        borderColor: 'rgba(255, 255, 255, 0.3)',
+                        borderColor: isLight ? 'rgba(33, 37, 41, 0.4)' : 'rgba(255, 255, 255, 0.3)',
                         borderWidth: isPointer ? '2px' : '1px',
                     }}
                 />

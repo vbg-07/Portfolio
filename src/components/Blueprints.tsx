@@ -1,19 +1,24 @@
 import { motion } from 'framer-motion'
+import { useTheme } from '../contexts/ThemeContext'
 
 export default function Blueprints() {
+    const { isLight } = useTheme()
+
     return (
         <div className="relative w-full h-full flex items-center justify-center">
             {/* Folded blueprint papers */}
             <div className="relative w-[90%] h-[80%]">
                 {/* Bottom paper (slightly offset) */}
                 <motion.div
-                    className="absolute inset-0 bg-gradient-to-br from-gray-900 to-black rounded-sm shadow-lg transform rotate-2"
+                    className={`absolute inset-0 rounded-sm shadow-lg transform rotate-2 transition-colors duration-300 ${isLight ? 'bg-gradient-to-br from-gray-400 to-gray-500 border-gray-500' : 'bg-gradient-to-br from-gray-900 to-black'
+                        }`}
                     style={{ transformOrigin: 'center' }}
                 />
 
                 {/* Main blueprint */}
                 <motion.div
-                    className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900 rounded-sm shadow-lg border border-white/10"
+                    className={`absolute inset-0 rounded-sm shadow-lg border transition-colors duration-300 ${isLight ? 'bg-gradient-to-br from-gray-400 to-gray-500 border-gray-500' : 'bg-gradient-to-br from-gray-800 to-gray-900 border-white/10'
+                        }`}
                     whileHover={{ rotate: -1 }}
                 >
                     {/* Blueprint grid */}

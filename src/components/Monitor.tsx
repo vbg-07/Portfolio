@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Tooltip, Cell } from 'recharts'
+import { useTheme } from '../contexts/ThemeContext'
 
 // QuestGage-style confusion data by concept
 // QuestGage-style confusion data by concept
@@ -12,19 +13,24 @@ const confusionData = [
 ]
 
 export default function Monitor() {
+    const { isLight } = useTheme()
+
     return (
         <div className="w-full h-full flex flex-col">
             {/* Monitor frame */}
-            <div className="relative flex-1 bg-dark-200 rounded-xl border-2 border-dark-50 shadow-lg overflow-hidden">
+            <div className={`relative flex-1 rounded-xl border-2 shadow-lg overflow-hidden transition-colors duration-300 ${isLight ? 'bg-gray-200 border-gray-300' : 'bg-dark-200 border-dark-50'
+                }`}>
                 {/* Screen bezel */}
-                <div className="absolute inset-2 bg-dark-400 rounded-lg overflow-hidden">
+                <div className={`absolute inset-2 rounded-lg overflow-hidden transition-colors duration-300 ${isLight ? 'bg-gray-100' : 'bg-dark-400'
+                    }`}>
                     {/* Screen content */}
-                    <div className="absolute inset-1 bg-gradient-to-br from-dark-300 to-dark-400 rounded-md p-3">
+                    <div className={`absolute inset-1 rounded-md p-3 transition-colors duration-300 ${isLight ? 'bg-gradient-to-br from-dark-40 to-dark-40' : 'bg-gradient-to-br from-dark-300 to-dark-400'
+                        }`}>
                         {/* Dashboard header - QuestGage style */}
                         <div className="flex items-center justify-between mb-2">
                             <div className="flex items-center gap-2">
-                                <div className="w-2 h-2 rounded-full bg-gray-400 animate-pulse" />
-                                <span className="text-[8px] font-mono text-gray-300 uppercase tracking-wider">QuestGage Analytics</span>
+                                <div className="w-2 h-2 rounded-full bg-gray-500 animate-pulse" />
+                                <span className={`text-[8px] font-mono uppercase tracking-wider ${isLight ? 'text-dark-50' : 'text-gray-300'}`}>QuestGage Analytics</span>
                             </div>
                             <div className="flex gap-1 items-center">
                                 <span className="text-[6px] text-gray-500">LIVE</span>
@@ -72,16 +78,16 @@ export default function Monitor() {
                                 animate={{ opacity: [0.6, 1, 0.6] }}
                                 transition={{ duration: 2, repeat: Infinity }}
                             >
-                                <div className="text-[6px] text-gray-500">STUDENTS</div>
-                                <div className="text-[10px] font-bold text-gray-300">24</div>
+                                <div className={`text-[6px] ${isLight ? 'text-dark-50' : 'text-gray-500'}`}>STUDENTS</div>
+                                <div className={`text-[10px] font-bold ${isLight ? 'text-gray-500' : 'text-gray-300'}`}>24</div>
                             </motion.div>
                             <div className="text-center">
-                                <div className="text-[6px] text-gray-500">ALERTS</div>
-                                <div className="text-[10px] font-bold text-gray-400">3</div>
+                                <div className={`text-[6px] ${isLight ? 'text-dark-50' : 'text-gray-500'}`}>ALERTS</div>
+                                <div className={`text-[10px] font-bold ${isLight ? 'text-gray-500' : 'text-gray-400'}`}>3</div>
                             </div>
                             <div className="text-center">
-                                <div className="text-[6px] text-gray-500">AVG CONF</div>
-                                <div className="text-[10px] font-bold text-gray-300">48%</div>
+                                <div className={`text-[6px] ${isLight ? 'text-dark-50' : 'text-gray-500'}`}>AVG CONF</div>
+                                <div className={`text-[10px] font-bold ${isLight ? 'text-gray-500' : 'text-gray-300'}`}>48%</div>
                             </div>
                         </div>
                     </div>

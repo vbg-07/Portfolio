@@ -7,9 +7,12 @@ import ServerRack from './ServerRack'
 import CoffeeCup from './CoffeeCup'
 import RotaryPhone from './RotaryPhone'
 import Blueprints from './Blueprints'
+import TableLamp from './TableLamp'
+import { useTheme } from '../contexts/ThemeContext'
 
 export default function DeskScene() {
     const { activeItem } = useApp()
+    const { isLight } = useTheme()
 
     // Variants for the desk zoom effect
     const deskVariants: Variants = {
@@ -51,7 +54,10 @@ export default function DeskScene() {
                 variants={deskVariants}
                 initial="initial"
                 animate={getAnimationState()}
-                className="relative w-[90vw] max-w-6xl h-[80vh] max-h-[800px] rounded-3xl bg-desk-wood shadow-desk blueprint-grid"
+                className={`relative w-[90vw] max-w-6xl h-[80vh] max-h-[800px] rounded-3xl shadow-desk blueprint-grid transition-colors duration-500 ${isLight
+                    ? 'bg-gradient-to-br from-gray-100 via-gray-200 to-gray-300'
+                    : 'bg-desk-wood'
+                    }`}
                 style={{
                     perspective: '1000px',
                     // Pivot around the monitor (top center) when zooming it, otherwise center
@@ -123,6 +129,11 @@ export default function DeskScene() {
                     <Blueprints />
                 </DeskItem>
 
+                {/* Table Lamp - Top right, theme toggle */}
+                <div className="absolute top-[12%] right-[3%] w-[12%] h-[25%] cursor-pointer">
+                    <TableLamp />
+                </div>
+
                 {/* Name - Exact center of desk - cut through effect */}
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none select-none">
                     <motion.h1
@@ -134,12 +145,16 @@ export default function DeskScene() {
                             fontFamily: "'Outfit', sans-serif",
                             lineHeight: 1.2,
                             color: 'transparent',
-                            backgroundImage: 'linear-gradient(135deg, rgba(255, 255, 255, 0.7) 0%, rgba(173, 181, 189, 0.5) 35%, rgba(108, 117, 125, 0.6) 65%, rgba(255, 255, 255, 0.7) 100%)',
+                            backgroundImage: isLight
+                                ? 'linear-gradient(135deg, rgba(33, 37, 41, 0.9) 0%, rgba(73, 80, 87, 0.7) 35%, rgba(108, 117, 125, 0.8) 65%, rgba(33, 37, 41, 0.9) 100%)'
+                                : 'linear-gradient(135deg, rgba(255, 255, 255, 0.7) 0%, rgba(173, 181, 189, 0.5) 35%, rgba(108, 117, 125, 0.6) 65%, rgba(255, 255, 255, 0.7) 100%)',
                             backgroundSize: '300% 300%',
                             backgroundClip: 'text',
                             WebkitBackgroundClip: 'text',
                             WebkitTextFillColor: 'transparent',
-                            filter: 'drop-shadow(0 0 30px rgba(255, 255, 255, 0.3)) drop-shadow(0 0 10px rgba(255, 255, 255, 0.1))',
+                            filter: isLight
+                                ? 'drop-shadow(0 0 30px rgba(0, 0, 0, 0.2)) drop-shadow(0 0 10px rgba(0, 0, 0, 0.1))'
+                                : 'drop-shadow(0 0 30px rgba(255, 255, 255, 0.3)) drop-shadow(0 0 10px rgba(255, 255, 255, 0.1))',
                         }}
                     >
                         Vignesh

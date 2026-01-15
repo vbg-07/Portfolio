@@ -1,10 +1,16 @@
 import { motion } from 'framer-motion'
+import { useTheme } from '../contexts/ThemeContext'
 
 export default function RotaryPhone() {
+    const { isLight } = useTheme()
+
     return (
         <div className="relative w-full h-full flex items-center justify-center">
             {/* Phone body */}
-            <div className="relative w-[85%] h-[85%] bg-gradient-to-b from-slate-800 to-slate-900 rounded-2xl shadow-lg border border-slate-700/50">
+            <div className={`relative w-[85%] h-[85%] rounded-2xl shadow-lg border transition-colors duration-300 ${isLight
+                    ? 'bg-gradient-to-b from-slate-300 to-slate-400 border-slate-400/50'
+                    : 'bg-gradient-to-b from-slate-800 to-slate-900 border-slate-700/50'
+                }`}>
                 {/* Rotary dial */}
                 <div className="absolute top-[15%] left-1/2 -translate-x-1/2 w-[65%] aspect-square">
                     {/* Outer ring */}

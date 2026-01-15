@@ -12,6 +12,15 @@
     --dark-elevated: #1a1a1a;
 }
 
+/* Light theme variables */
+html.light {
+    --tech-blue: #495057;
+    --tech-blue-dim: #adb5bd;
+    --dark-bg: #f8f9fa;
+    --dark-surface: #e9ecef;
+    --dark-elevated: #dee2e6;
+}
+
 @layer base {
     * {
         box-sizing: border-box;

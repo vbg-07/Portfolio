@@ -29,6 +29,15 @@ export default {
                     400: '#050505',
                     500: '#000000', // Deepest dark
                 },
+                // Light theme colors (inverted for light mode)
+                'light': {
+                    50: '#f8f9fa',
+                    100: '#f1f3f5',
+                    200: '#e9ecef',
+                    300: '#dee2e6',
+                    400: '#ced4da',
+                    500: '#ffffff', // Brightest light
+                },
                 'accent': {
                     blue: '#e9ecef',   // Was #00D4FF
                     purple: '#ced4da', // Was #7B61FF

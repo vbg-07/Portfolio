@@ -1,6 +1,9 @@
 import { motion } from 'framer-motion'
+import { useTheme } from '../contexts/ThemeContext'
 
 export default function CoffeeCup() {
+    const { isLight } = useTheme()
+
     return (
         <div className="relative w-full h-full flex items-center justify-center">
             {/* Steam particles */}
@@ -28,7 +31,8 @@ export default function CoffeeCup() {
             {/* Cup body */}
             <div className="relative w-[70%] h-[65%] mt-4">
                 {/* Cup */}
-                <div className="absolute inset-0 bg-gradient-to-b from-gray-700 to-gray-800 rounded-b-3xl rounded-t-lg shadow-lg overflow-hidden">
+                <div className={`absolute inset-0 rounded-b-3xl rounded-t-lg shadow-lg overflow-hidden transition-colors duration-300 ${isLight ? 'bg-gradient-to-b from-gray-300 to-gray-400' : 'bg-gradient-to-b from-gray-700 to-gray-800'
+                    }`}>
                     {/* Coffee surface */}
                     <div className="absolute top-2 left-2 right-2 h-4 bg-gradient-to-br from-gray-900 to-black rounded-full">
                         <div className="absolute top-1 left-1/4 w-1/2 h-1 bg-gray-600/50 rounded-full blur-sm" />

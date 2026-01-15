@@ -5,6 +5,7 @@ import CommandDashboard from './components/CommandDashboard'
 import Modal from './components/Modal'
 import { AuroraShader } from '@/components/ui/aurora-shader'
 import { CustomCursor } from '@/components/ui/custom-cursor'
+import { ThemeProvider, useTheme } from './contexts/ThemeContext'
 import './index.css'
 
 // Types
@@ -24,9 +25,10 @@ export const AppContext = createContext<AppContextType>({
 
 export const useApp = () => useContext(AppContext)
 
-function App() {
+function AppContent() {
   const [activeItem, setActiveItem] = useState<DeskItemType>(null)
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
+  const { isLight } = useTheme()
 
   // Handle resize with debounce
   useState(() => {
@@ -44,17 +46,26 @@ function App() {
     }
   })
 
+  // Theme-aware colors for aurora shader (opposite colors)
+  const auroraColors = isLight
+    ? { primary: '#212529', secondary: '#343a40', background: '#f8f9fa' }  // Very dark aurora on white bg
+    : { primary: '#e9ecef', secondary: '#adb5bd', background: '#050505' }  // Light on dark
+
+  // Much higher intensity for light mode to make aurora clearly visible
+  const auroraIntensity = isLight ? 3.5 : 1.1
+
   return (
     <AppContext.Provider value={{ activeItem, setActiveItem, isMobile }}>
-      <div className="min-h-screen bg-dark-300 dark overflow-hidden">
+      <div className={`min-h-screen overflow-hidden transition-colors duration-500 ${isLight ? 'bg-light-300' : 'bg-dark-300'
+        }`}>
         {/* Smooth aurora shader background */}
         <div className="fixed inset-0 pointer-events-none">
           <AuroraShader
-            colorPrimary="#e9ecef"
-            colorSecondary="#adb5bd"
-            colorBackground="#050505"
+            colorPrimary={auroraColors.primary}
+            colorSecondary={auroraColors.secondary}
+            colorBackground={auroraColors.background}
             speed={0.4}
-            intensity={1.1}
+            intensity={auroraIntensity}
           />
         </div>
 
@@ -70,6 +81,14 @@ function App() {
         </AnimatePresence>
       </div>
     </AppContext.Provider>
+  )
+}
+
+function App() {
+  return (
+    <ThemeProvider>
+      <AppContent />
+    </ThemeProvider>
   )
 }
 
