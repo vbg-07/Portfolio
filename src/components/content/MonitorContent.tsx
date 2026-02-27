@@ -27,6 +27,25 @@ const getConfusionColor = (value: number) => {
     return '#22c55e' // green
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const CustomTooltip = ({ active, payload, label }: any) => {
+    if (!active || !payload?.length) return null
+    const conceptName = String(label ?? '')
+    const value = Number(payload[0]?.value ?? 0)
+    return (
+        <div style={{
+            backgroundColor: '#151c28',
+            border: '1px solid rgba(0, 212, 255, 0.3)',
+            borderRadius: '8px',
+            padding: '8px 12px',
+            color: '#e5e7eb',
+        }}>
+            <span style={{ color: '#e5e7eb', display: 'block', fontSize: '13px', fontWeight: 500 }}>{conceptName}</span>
+            <span style={{ color: '#e5e7eb', display: 'block', fontSize: '12px', marginTop: '4px' }}>{`Confusion : ${value}%`}</span>
+        </div>
+    )
+}
+
 const projects = [
     {
         title: 'QuestGage - AI Proctoring System',
@@ -102,15 +121,8 @@ export default function MonitorContent() {
                                 <XAxis type="number" domain={[0, 100]} stroke="#6b7280" fontSize={12} />
                                 <YAxis type="category" dataKey="concept" stroke="#6b7280" fontSize={10} width={80} />
                                 <Tooltip
-                                    contentStyle={{
-                                        backgroundColor: '#151c28',
-                                        border: '1px solid rgba(0, 212, 255, 0.3)',
-                                        borderRadius: '8px',
-                                        color: '#e5e7eb',
-                                    }}
-                                    labelStyle={{ color: '#e5e7eb' }}
-                                    itemStyle={{ color: '#e5e7eb' }}
-                                    formatter={(value) => [`${value ?? 0}%`, 'Confusion']}
+                                    content={<CustomTooltip />}
+                                    cursor={{ fill: 'rgba(0, 212, 255, 0.1)' }}
                                 />
                                 <Bar dataKey="confusion" radius={[0, 4, 4, 0]}>
                                     {confusionByConcept.map((entry, index) => (
@@ -135,15 +147,8 @@ export default function MonitorContent() {
                                 <XAxis dataKey="time" stroke="#6b7280" fontSize={12} />
                                 <YAxis domain={[0, 100]} stroke="#6b7280" fontSize={12} />
                                 <Tooltip
-                                    contentStyle={{
-                                        backgroundColor: '#151c28',
-                                        border: '1px solid rgba(0, 212, 255, 0.3)',
-                                        borderRadius: '8px',
-                                        color: '#e5e7eb',
-                                    }}
-                                    labelStyle={{ color: '#e5e7eb' }}
-                                    itemStyle={{ color: '#e5e7eb' }}
-                                    formatter={(value) => [`${value ?? 0}%`, 'Avg Confusion']}
+                                    content={<CustomTooltip />}
+                                    cursor={{ stroke: 'rgba(0, 212, 255, 0.3)' }}
                                 />
                                 <Line
                                     type="monotone"

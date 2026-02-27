@@ -50,13 +50,20 @@ export default function Monitor() {
                                         width={0}
                                     />
                                     <Tooltip
-                                        contentStyle={{
-                                            backgroundColor: '#151c28',
-                                            border: '1px solid rgba(255, 255, 255, 0.1)',
-                                            borderRadius: '8px',
-                                            fontSize: '10px'
+                                        content={({ active, payload, label }) => {
+                                            if (!active || !payload?.length) return null
+                                            return (
+                                                <div style={{
+                                                    backgroundColor: '#151c28',
+                                                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                                                    borderRadius: '8px',
+                                                    padding: '6px 10px',
+                                                }}>
+                                                    <span style={{ color: '#e5e7eb', display: 'block', fontSize: '10px', fontWeight: 500 }}>{String(label ?? '')}</span>
+                                                    <span style={{ color: '#e5e7eb', display: 'block', fontSize: '10px', marginTop: '2px' }}>{`Confusion : ${payload[0]?.value ?? 0}%`}</span>
+                                                </div>
+                                            )
                                         }}
-                                        formatter={(value) => [`${value ?? 0}%`, 'Confusion']}
                                     />
                                     <Bar
                                         dataKey="confusion"
