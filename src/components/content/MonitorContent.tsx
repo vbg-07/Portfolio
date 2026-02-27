@@ -106,7 +106,10 @@ export default function MonitorContent() {
                                         backgroundColor: '#151c28',
                                         border: '1px solid rgba(0, 212, 255, 0.3)',
                                         borderRadius: '8px',
+                                        color: '#e5e7eb',
                                     }}
+                                    labelStyle={{ color: '#e5e7eb' }}
+                                    itemStyle={{ color: '#e5e7eb' }}
                                     formatter={(value) => [`${value ?? 0}%`, 'Confusion']}
                                 />
                                 <Bar dataKey="confusion" radius={[0, 4, 4, 0]}>
@@ -136,7 +139,10 @@ export default function MonitorContent() {
                                         backgroundColor: '#151c28',
                                         border: '1px solid rgba(0, 212, 255, 0.3)',
                                         borderRadius: '8px',
+                                        color: '#e5e7eb',
                                     }}
+                                    labelStyle={{ color: '#e5e7eb' }}
+                                    itemStyle={{ color: '#e5e7eb' }}
                                     formatter={(value) => [`${value ?? 0}%`, 'Avg Confusion']}
                                 />
                                 <Line
