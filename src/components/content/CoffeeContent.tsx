@@ -1,25 +1,33 @@
 import { motion } from 'framer-motion'
 
 const skills = [
-    { category: 'Cloud (AWS)', items: ['S3', 'Lambda', 'Rekognition', 'DynamoDB', 'CloudWatch'] },
+    { category: 'Cloud (AWS)', items: ['S3', 'Lambda', 'Rekognition', 'DynamoDB', 'CloudWatch', 'API Gateway'] },
     { category: 'Frontend', items: ['React', 'TypeScript', 'Tailwind CSS', 'Framer Motion', 'Vite'] },
-    { category: 'Data & Analytics', items: ['Chart.js', 'Recharts', 'Python', 'SQL'] },
+    { category: 'Backend & DevOps', items: ['Node.js', 'Python', 'SQL', 'Git', 'CI/CD'] },
+    { category: 'Data & Analytics', items: ['Chart.js', 'Recharts', 'REST APIs'] },
 ]
 
 const timeline = [
+    {
+        year: '2025 - Present',
+        role: 'Software Development Engineer',
+        company: 'Aexiz Solutions',
+        description: 'Building and maintaining scalable software solutions as an SDE',
+        highlight: true
+    },
     {
         year: '2025',
         role: 'Cloud & Full-Stack Developer',
         company: 'Independent Projects',
         description: 'Building serverless applications with AWS and modern React',
-        highlight: true
+        highlight: false
     },
     {
         year: '2025',
         role: 'QuestGage',
         company: 'Personal Project',
         description: 'AI-powered exam proctoring system with AWS Rekognition & real-time analytics',
-        highlight: true
+        highlight: false
     },
 ]
 
@@ -35,9 +43,9 @@ export default function CoffeeContent() {
                 >
                     ☁️
                 </motion.div>
-                <h3 className="text-2xl font-bold text-white">Cloud Developer & Builder</h3>
+                <h3 className="text-2xl font-bold text-white">Software Developer & Cloud Enthusiast</h3>
                 <p className="text-gray-400 mt-2 max-w-xl mx-auto">
-                    Building serverless applications on AWS with React frontends. Passionate about AI/ML integration and real-time analytics.
+                    SDE at Aexiz Solutions • Building serverless applications on AWS with React frontends. Passionate about AI/ML integration and real-time analytics.
                 </p>
                 <div className="flex justify-center gap-4 mt-4">
                     <a
@@ -52,7 +60,7 @@ export default function CoffeeContent() {
                         <span className="text-sm text-gray-300">vbg-07</span>
                     </a>
                     <a
-                        href="https://www.linkedin.com/in/vignesh-b-84545a27b"
+                        href="https://linkedin.com/in/vbg07"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex items-center gap-2 px-4 py-2 bg-dark-200 rounded-lg border border-tech-blue-900/30 hover:border-blue-500/50 transition-colors"
@@ -69,12 +77,12 @@ export default function CoffeeContent() {
             <section>
                 <h3 className="text-xl font-semibold text-gray-200 mb-4 flex items-center gap-2">
                     <span className="text-accent-amber">☕</span>
-                    What I'm Building
+                    What I Do
                 </h3>
                 <div className="bg-dark-200 rounded-xl p-6 border border-tech-blue-900/30">
                     <p className="text-gray-300 leading-relaxed">
-                        I'm a developer focused on building <span className="text-tech-blue-400">serverless applications</span> that
-                        leverage AWS cloud services. My recent project, <span className="text-accent-green">QuestGage</span>, combines
+                        I'm a <span className="text-tech-blue-400">Software Development Engineer at Aexiz Solutions</span>, focused
+                        on building scalable software and <span className="text-accent-green">serverless applications</span> that leverage AWS cloud services. My personal project, <span className="text-accent-green">QuestGage</span>, combines
                         my interests in AI/ML and data analytics.
                     </p>
                     <p className="text-gray-300 leading-relaxed mt-4">
@@ -119,7 +127,7 @@ export default function CoffeeContent() {
 
             {/* Timeline */}
             <section>
-                <h3 className="text-xl font-semibold text-gray-200 mb-4">Project Timeline</h3>
+                <h3 className="text-xl font-semibold text-gray-200 mb-4">Experience & Projects</h3>
                 <div className="space-y-4">
                     {timeline.map((item, i) => (
                         <motion.div

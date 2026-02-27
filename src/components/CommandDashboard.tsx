@@ -79,7 +79,7 @@ export default function CommandDashboard() {
                 className="text-center py-4"
             >
                 <p className="text-xs text-gray-600 font-mono">
-                    v2.0.0 • Cloud Architect Portfolio
+                    v2.0.0 • SDE Portfolio
                 </p>
             </motion.footer>
         </div>

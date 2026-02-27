@@ -69,9 +69,9 @@ export default function MonitorContent() {
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                     {[
-                        { label: 'GitHub Repos', value: '3', change: 'Public', positive: true },
+                        { label: 'Current Role', value: 'SDE', change: 'Aexiz Solutions', positive: true },
                         { label: 'Primary Stack', value: 'AWS', change: 'Cloud Native', positive: true },
-                        { label: 'Focus Area', value: 'AI/ML', change: 'Serverless', positive: true },
+                        { label: 'Focus Area', value: 'AI/ML', change: 'Full-Stack', positive: true },
                     ].map((stat, i) => (
                         <motion.div
                             key={stat.label}
