@@ -797,13 +797,16 @@ body,
 
 .focus-panel__hint kbd {
     display: inline-block;
-    padding: 2px 7px;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid var(--border);
-    border-radius: 4px;
+    padding: 3px 8px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom-width: 2px;
+    border-radius: 5px;
     font-family: 'Inter', monospace;
-    font-size: 0.68rem;
+    font-size: 0.67rem;
     color: var(--text-muted);
+    line-height: 1;
+    vertical-align: middle;
 }
 
 /* Panel scrollbar */
@@ -1103,10 +1106,15 @@ body,
 /* ── Return button ── */
 .project-system__back {
     position: fixed;
-    bottom: 32px;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 10px 24px;
+    bottom: 36px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    width: fit-content;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 11px 22px 11px 18px;
     background: rgba(255, 255, 255, 0.04);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 10px;
@@ -1122,10 +1130,21 @@ body,
     animation: contentIn 0.5s var(--ease-out-expo) 0.5s forwards;
 }
 
+.project-system__back svg {
+    flex-shrink: 0;
+    opacity: 0.7;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
 .project-system__back:hover {
     background: rgba(255, 255, 255, 0.08);
     border-color: rgba(255, 255, 255, 0.14);
     color: var(--text-secondary);
+}
+
+.project-system__back:hover svg {
+    opacity: 1;
+    transform: translateX(-2px);
 }
 
 .project-system--has-focus .project-system__back {
@@ -1298,13 +1317,16 @@ body,
 
 .proj-panel__hint kbd {
     display: inline-block;
-    padding: 2px 6px;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid var(--border);
-    border-radius: 3px;
+    padding: 3px 8px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom-width: 2px;
+    border-radius: 5px;
     font-family: 'Inter', monospace;
-    font-size: 0.65rem;
+    font-size: 0.67rem;
     color: var(--text-muted);
+    line-height: 1;
+    vertical-align: middle;
 }
 
 /* Closing state */
