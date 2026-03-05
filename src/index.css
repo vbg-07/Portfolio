@@ -491,7 +491,14 @@ body,
     color: var(--text-muted);
     text-transform: uppercase;
     white-space: nowrap;
-    transition: color 0.5s var(--ease-smooth);
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity 0.4s var(--ease-smooth), color 0.5s var(--ease-smooth), transform 0.4s var(--ease-smooth);
+}
+
+.planet:hover .planet__label {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 /* ── Hover ── */
@@ -1067,10 +1074,14 @@ body,
     color: var(--text-muted);
     text-transform: uppercase;
     white-space: nowrap;
-    transition: color 0.4s var(--ease-smooth);
+    opacity: 0;
+    transform: translateY(3px);
+    transition: opacity 0.35s var(--ease-smooth), color 0.4s var(--ease-smooth), transform 0.35s var(--ease-smooth);
 }
 
 .satellite:hover .satellite__label {
+    opacity: 1;
+    transform: translateY(0);
     color: var(--text-secondary);
 }
 
