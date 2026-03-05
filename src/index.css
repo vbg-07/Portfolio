@@ -870,8 +870,521 @@ body,
         font-size: 0.6rem;
     }
 
-    .focus-panel {
+    .focus-panel,
+    .proj-panel {
         padding: 30px 24px;
         border-radius: 16px;
     }
+
+    .project-system__planet-body {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+/* ========================================
+   PROJECT SYSTEM — sub-system overlay
+   ======================================== */
+.project-system {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(6, 6, 16, 0.85);
+    backdrop-filter: blur(8px);
+    animation: fadeIn 0.6s var(--ease-smooth);
+}
+
+.project-system--closing {
+    animation: fadeOut 0.7s var(--ease-smooth) forwards;
+}
+
+.project-system__inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+/* ── Center planet ── */
+.project-system__center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.project-system__planet-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -65%);
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    opacity: 0.15;
+    filter: blur(20px);
+    animation: starPulse 8s ease-in-out infinite alternate;
+}
+
+.project-system__planet-body {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    box-shadow:
+        0 0 30px rgba(255, 255, 255, 0.06),
+        inset -4px -4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.project-system__planet-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+}
+
+/* ── Satellite orbit rings ── */
+.sat-ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.02);
+    pointer-events: none;
+    z-index: 1;
+    transition:
+        border-color 0.6s var(--ease-smooth),
+        box-shadow 0.6s var(--ease-smooth),
+        opacity 0.6s var(--ease-smooth);
+}
+
+.sat-ring--hover {
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.015);
+}
+
+.sat-ring--focus {
+    border-color: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.02);
+}
+
+.sat-ring--dimmed {
+    opacity: 0.15;
+}
+
+/* ── Satellite arm ── */
+.sat-arm {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+    transition: transform 0.15s linear;
+}
+
+/* ── Satellite node ── */
+.satellite {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 7px;
+    cursor: pointer;
+    z-index: 10;
+    pointer-events: auto;
+    transition:
+        transform 0.7s var(--ease-cinematic),
+        opacity 0.6s var(--ease-smooth);
+    will-change: transform;
+    margin-top: calc(var(--sat-size, 16px) / -2 - 4px);
+    margin-left: calc(var(--sat-size, 16px) / -2);
+}
+
+.satellite__glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -65%);
+    width: calc(var(--sat-size, 16px) + 16px);
+    height: calc(var(--sat-size, 16px) + 16px);
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--sat-color) 0%, transparent 70%);
+    opacity: 0.1;
+    filter: blur(8px);
+    transition: opacity 0.5s var(--ease-smooth);
+    pointer-events: none;
+}
+
+.satellite:hover .satellite__glow {
+    opacity: 0.3;
+}
+
+.satellite__body {
+    width: var(--sat-size, 16px);
+    height: var(--sat-size, 16px);
+    border-radius: 50%;
+    background:
+        radial-gradient(circle at 35% 35%,
+            color-mix(in srgb, var(--sat-color) 80%, white 20%) 0%,
+            var(--sat-color) 50%,
+            color-mix(in srgb, var(--sat-color) 70%, black 30%) 100%);
+    box-shadow:
+        0 0 12px color-mix(in srgb, var(--sat-color) 25%, transparent 75%),
+        0 0 25px color-mix(in srgb, var(--sat-color) 8%, transparent 92%),
+        inset -2px -2px 8px rgba(0, 0, 0, 0.4);
+    transition:
+        box-shadow 0.5s var(--ease-smooth),
+        transform 0.5s var(--ease-cinematic);
+}
+
+.satellite:hover .satellite__body {
+    box-shadow:
+        0 0 20px color-mix(in srgb, var(--sat-color) 40%, transparent 60%),
+        0 0 40px color-mix(in srgb, var(--sat-color) 15%, transparent 85%),
+        inset -2px -2px 8px rgba(0, 0, 0, 0.4);
+    transform: scale(1.12);
+}
+
+.satellite__label {
+    font-size: 0.6rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    white-space: nowrap;
+    transition: color 0.4s var(--ease-smooth);
+}
+
+.satellite:hover .satellite__label {
+    color: var(--text-secondary);
+}
+
+/* Dim siblings */
+.project-system--has-hover .satellite {
+    opacity: 0.3;
+}
+
+.project-system--has-hover .satellite--hovered {
+    opacity: 1;
+}
+
+/* Active satellite */
+.satellite--active {
+    pointer-events: none;
+}
+
+.satellite--active .satellite__body {
+    animation: planetExpand 0.7s var(--ease-cinematic) forwards;
+}
+
+.satellite--active .satellite__label,
+.satellite--active .satellite__glow {
+    animation: fadeOutQuick 0.3s var(--ease-smooth) forwards;
+}
+
+/* Receded satellites */
+.satellite--receded {
+    opacity: 0.1 !important;
+    pointer-events: none;
+}
+
+/* ── Return button ── */
+.project-system__back {
+    position: fixed;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 24px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    color: var(--text-muted);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    cursor: pointer;
+    z-index: 110;
+    transition: all 0.3s ease;
+    opacity: 0;
+    animation: contentIn 0.5s var(--ease-out-expo) 0.5s forwards;
+}
+
+.project-system__back:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.14);
+    color: var(--text-secondary);
+}
+
+.project-system--has-focus .project-system__back {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* ========================================
+   PROJECT PANEL — detail card from satellite
+   ======================================== */
+.proj-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 120;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.4s var(--ease-smooth);
+}
+
+.proj-backdrop--closing {
+    animation: fadeOut 0.6s var(--ease-smooth) forwards;
+}
+
+.proj-panel {
+    position: relative;
+    width: min(520px, 88vw);
+    max-height: 82vh;
+    overflow-y: auto;
+    background: rgba(12, 12, 24, 0.94);
+    backdrop-filter: blur(40px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 18px;
+    padding: 38px 36px;
+    box-shadow:
+        0 0 70px rgba(0, 0, 0, 0.7),
+        0 0 25px var(--glow);
+    animation: panelGrow 0.8s var(--ease-cinematic) forwards;
+}
+
+.proj-panel--closing {
+    animation: panelCollapse 0.6s var(--ease-cinematic) forwards;
+}
+
+.proj-panel__close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    z-index: 10;
+}
+
+.proj-panel__close:hover {
+    background: rgba(255, 255, 255, 0.07);
+    color: var(--text-primary);
+}
+
+.proj-panel__accent-bar {
+    width: 28px;
+    height: 3px;
+    border-radius: 2px;
+    margin-bottom: 16px;
+    opacity: 0.7;
+}
+
+.proj-panel__title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+}
+
+.proj-panel__desc {
+    font-size: 0.85rem;
+    line-height: 1.75;
+    color: var(--text-secondary);
+    margin-bottom: 18px;
+    opacity: 0;
+    transform: translateY(8px);
+    animation: contentIn 0.5s var(--ease-out-expo) 0.15s forwards;
+}
+
+/* Tech tags */
+.proj-panel__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: contentIn 0.5s var(--ease-out-expo) 0.25s forwards;
+}
+
+.proj-panel__tag {
+    padding: 4px 12px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 6px;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    color: var(--text-muted);
+}
+
+/* Section label */
+.proj-panel__section-label {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    opacity: 0;
+    animation: contentIn 0.5s var(--ease-out-expo) 0.35s forwards;
+}
+
+/* Links */
+.proj-panel__links {
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+    opacity: 0;
+    animation: contentIn 0.5s var(--ease-out-expo) 0.55s forwards;
+}
+
+.proj-panel__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text-secondary);
+    font-size: 0.78rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    cursor: pointer;
+}
+
+.proj-panel__link:hover {
+    background: rgba(255, 255, 255, 0.07);
+    border-color: rgba(255, 255, 255, 0.12);
+    color: var(--text-primary);
+    transform: translateY(-1px);
+}
+
+/* Hint */
+.proj-panel__hint {
+    margin-top: 20px;
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    text-align: center;
+    letter-spacing: 0.04em;
+    opacity: 0;
+    animation: contentIn 0.5s var(--ease-out-expo) 0.65s forwards;
+}
+
+.proj-panel__hint kbd {
+    display: inline-block;
+    padding: 2px 6px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    font-family: 'Inter', monospace;
+    font-size: 0.65rem;
+    color: var(--text-muted);
+}
+
+/* Closing state */
+.proj-panel--closing .proj-panel__desc,
+.proj-panel--closing .proj-panel__tags,
+.proj-panel--closing .proj-panel__section-label,
+.proj-panel--closing .proj-panel__links,
+.proj-panel--closing .proj-panel__hint {
+    animation: none;
+    opacity: 1;
+}
+
+/* Panel scrollbar */
+.proj-panel::-webkit-scrollbar {
+    width: 3px;
+}
+
+.proj-panel::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.proj-panel::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 2px;
+}
+
+/* ========================================
+   ARCHITECTURE DIAGRAM
+   ======================================== */
+.arch-diagram {
+    margin-bottom: 16px;
+    opacity: 0;
+    animation: contentIn 0.5s var(--ease-out-expo) 0.4s forwards;
+}
+
+.arch-diagram__svg {
+    width: 100%;
+    height: auto;
+    max-height: 120px;
+    color: var(--text-muted);
+}
+
+/* Animated connection lines */
+.arch-diagram__line {
+    stroke-dasharray: 4 3;
+    animation: dashFlow 3s linear infinite;
+}
+
+@keyframes dashFlow {
+    to {
+        stroke-dashoffset: -21;
+    }
+}
+
+/* Nodes */
+.arch-diagram__node {
+    opacity: 0;
+    animation: archNodeIn 0.4s var(--ease-out-expo) forwards;
+}
+
+@keyframes archNodeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.7);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.arch-diagram__node:hover circle {
+    fill: rgba(255, 255, 255, 0.08);
+    stroke-opacity: 0.6;
+}
+
+.arch-diagram__label {
+    font-size: 2.8px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    fill: var(--text-muted);
 }

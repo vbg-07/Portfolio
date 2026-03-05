@@ -15,14 +15,130 @@ export interface SectionData {
     label: string
     startAngle: number
     orbitRadius: number
-    orbitDuration: number   // seconds for one full orbit (30–60)
+    orbitDuration: number
     planetSize: number
     planetColor: string
     card: CardContent
 }
 
+/* ── Project System ── */
+
+export interface ArchNode {
+    id: string
+    label: string
+    x: number   // 0–100 percentage
+    y: number   // 0–100 percentage
+}
+
+export interface ArchConnection {
+    from: string
+    to: string
+}
+
+export interface ProjectData {
+    id: string
+    title: string
+    description: string
+    technologies: string[]
+    githubUrl: string
+    liveUrl?: string
+    orbitRadius: number
+    orbitDuration: number
+    satelliteSize: number
+    color: string
+    architecture: {
+        nodes: ArchNode[]
+        connections: ArchConnection[]
+    }
+}
+
 export const PLAYER_NAME = 'VIGNESH'
 export const PLAYER_TITLE = 'Software Development Engineer'
+
+export const projects: ProjectData[] = [
+    {
+        id: 'questgage',
+        title: 'QuestGage',
+        description: 'AI-powered exam proctoring system that uses webcam analysis to detect student confusion and anomalies during exams. Features a real-time teacher dashboard with analytics and per-question timing insights.',
+        technologies: ['React', 'Vite', 'Tailwind CSS', 'AWS S3', 'AWS Lambda', 'AWS Rekognition', 'DynamoDB', 'Chart.js'],
+        githubUrl: 'https://github.com/vbg-07/QuestGage',
+        orbitRadius: 14,
+        orbitDuration: 28,
+        satelliteSize: 18,
+        color: 'hsl(200, 45%, 55%)',
+        architecture: {
+            nodes: [
+                { id: 'webcam', label: 'Webcam', x: 8, y: 50 },
+                { id: 's3', label: 'S3', x: 30, y: 30 },
+                { id: 'lambda', label: 'Lambda', x: 52, y: 50 },
+                { id: 'rekognition', label: 'Rekognition', x: 52, y: 15 },
+                { id: 'dynamo', label: 'DynamoDB', x: 75, y: 30 },
+                { id: 'dashboard', label: 'Dashboard', x: 92, y: 50 },
+            ],
+            connections: [
+                { from: 'webcam', to: 's3' },
+                { from: 's3', to: 'lambda' },
+                { from: 'lambda', to: 'rekognition' },
+                { from: 'lambda', to: 'dynamo' },
+                { from: 'dynamo', to: 'dashboard' },
+            ],
+        },
+    },
+    {
+        id: 'pipeline-configs',
+        title: 'Pipeline Configs',
+        description: 'Full-stack web application for learning Docker, GitHub Actions CI/CD pipelines, and Kubernetes deployments. Includes a React frontend and Node.js backend with automated build, test, and deploy workflows.',
+        technologies: ['React', 'Node.js', 'Docker', 'Kubernetes', 'GitHub Actions', 'Docker Compose'],
+        githubUrl: 'https://github.com/vbg-07/Pipeline-Configs',
+        orbitRadius: 22,
+        orbitDuration: 36,
+        satelliteSize: 15,
+        color: 'hsl(145, 35%, 50%)',
+        architecture: {
+            nodes: [
+                { id: 'git', label: 'GitHub', x: 8, y: 50 },
+                { id: 'actions', label: 'Actions', x: 30, y: 30 },
+                { id: 'docker', label: 'Docker', x: 52, y: 50 },
+                { id: 'k8s', label: 'K8s', x: 75, y: 30 },
+                { id: 'frontend', label: 'Frontend', x: 92, y: 35 },
+                { id: 'backend', label: 'Backend', x: 92, y: 65 },
+            ],
+            connections: [
+                { from: 'git', to: 'actions' },
+                { from: 'actions', to: 'docker' },
+                { from: 'docker', to: 'k8s' },
+                { from: 'k8s', to: 'frontend' },
+                { from: 'k8s', to: 'backend' },
+            ],
+        },
+    },
+    {
+        id: 'portfolio',
+        title: 'Portfolio',
+        description: 'This solar-system portfolio — a spatial exploration experience built with React, TypeScript, and CSS transforms. Features orbital motion, parallax depth, and cinematic transitions.',
+        technologies: ['React', 'TypeScript', 'Vite', 'CSS Transforms', 'HTML Canvas'],
+        githubUrl: 'https://github.com/vbg-07/Portfolio',
+        orbitRadius: 10,
+        orbitDuration: 22,
+        satelliteSize: 12,
+        color: 'hsl(35, 40%, 55%)',
+        architecture: {
+            nodes: [
+                { id: 'react', label: 'React', x: 8, y: 50 },
+                { id: 'components', label: 'Components', x: 32, y: 30 },
+                { id: 'css', label: 'CSS Engine', x: 55, y: 50 },
+                { id: 'animations', label: 'Animations', x: 78, y: 30 },
+                { id: 'browser', label: 'Browser', x: 92, y: 50 },
+            ],
+            connections: [
+                { from: 'react', to: 'components' },
+                { from: 'components', to: 'css' },
+                { from: 'css', to: 'animations' },
+                { from: 'animations', to: 'browser' },
+            ],
+        },
+    },
+]
 
 export const sections: SectionData[] = [
     {
@@ -57,16 +173,8 @@ export const sections: SectionData[] = [
         planetColor: 'hsl(30, 35%, 55%)',
         card: {
             title: 'Projects',
-            description: [
-                'QuestGage — AI-powered exam proctoring with real-time confusion detection using AWS Rekognition, Lambda, and DynamoDB.',
-                'Teacher analytics dashboard with live monitoring and post-exam reports.',
-                'This portfolio — a spatial exploration experience built with React and CSS transforms.',
-                'Full-stack projects using React, TypeScript, and AWS serverless.',
-            ],
-            links: [
-                { label: 'QuestGage Repo', url: 'https://github.com/vbg-07/QuestGage', icon: '📦' },
-                { label: 'Portfolio Repo', url: 'https://github.com/vbg-07', icon: '🌐' },
-            ],
+            description: [],
+            links: [],
         },
     },
     {

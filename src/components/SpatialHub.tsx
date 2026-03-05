@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, useRef } from 'react'
 import { sections, PLAYER_NAME, PLAYER_TITLE } from '../data/portfolioData'
 import SpatialNode from './SpatialNode'
 import FocusPanel from './FocusPanel'
+import ProjectSystem from './ProjectSystem'
 
 const twinkleStars = [
     { x: 10, y: 12, size: 2, dur: 4 },
@@ -216,7 +217,15 @@ export default function SpatialHub() {
                 </div>
             </div>
 
-            {focusedSection && activeNodePos && (
+            {focusedSection && activeNodePos && focusedId === 'projects' && (
+                <ProjectSystem
+                    isClosing={isClosing}
+                    onExit={handleClose}
+                    planetColor={focusedSection.planetColor}
+                />
+            )}
+
+            {focusedSection && activeNodePos && focusedId !== 'projects' && (
                 <FocusPanel
                     section={focusedSection}
                     offsetX={activeNodePos.x}
