@@ -1,196 +1,494 @@
-/* Fonts loaded in index.html for LCP optimization */
+/* ===== Spatial Portfolio — Design System ===== */
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
+/* ── Tokens ── */
 :root {
-    --tech-blue: #adb5bd;
-    --tech-blue-dim: #495057;
-    --dark-bg: #0a0a0a;
-    --dark-surface: #141414;
-    --dark-elevated: #1a1a1a;
+    --bg: #0a0a0a;
+    --surface: #141414;
+    --elevated: #1a1a1a;
+    --text-primary: #f1f3f5;
+    --text-secondary: #adb5bd;
+    --text-muted: #495057;
+    --border: rgba(255, 255, 255, 0.06);
+    --glow: rgba(255, 255, 255, 0.08);
+    --glow-strong: rgba(255, 255, 255, 0.15);
+
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+
+    --hub-perspective: 1200px;
 }
 
-/* Light theme variables */
-html.light {
-    --tech-blue: #495057;
-    --tech-blue-dim: #adb5bd;
-    --dark-bg: #f8f9fa;
-    --dark-surface: #e9ecef;
-    --dark-elevated: #dee2e6;
+/* ── Reset ── */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-@layer base {
-    * {
-        box-sizing: border-box;
+html,
+body,
+#root {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: var(--bg);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Spatial Hub Container ── */
+.spatial-hub {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    perspective: var(--hub-perspective);
+    background:
+        radial-gradient(ellipse at 50% 50%, rgba(20, 20, 20, 0.8) 0%, var(--bg) 70%);
+    transition: filter 0.8s var(--ease-smooth);
+}
+
+.spatial-hub--focused .spatial-hub__bg {
+    filter: blur(3px);
+}
+
+/* ── Scene Container (zooms on focus) ── */
+.spatial-hub__scene {
+    position: absolute;
+    inset: 0;
+    transition:
+        transform 0.8s var(--ease-out-expo),
+        opacity 0.6s var(--ease-smooth);
+    transform-origin: center center;
+}
+
+.spatial-hub--focused .spatial-hub__scene {
+    transform: scale(0.88);
+    opacity: 0.4;
+}
+
+/* ── Orbit Container ── */
+.spatial-hub__orbit {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+/* ── Center Identity ── */
+.spatial-hub__center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 10;
+    pointer-events: none;
+    transition:
+        opacity 0.6s var(--ease-smooth),
+        transform 0.6s var(--ease-smooth);
+}
+
+.spatial-hub--focused .spatial-hub__center {
+    opacity: 0.1;
+    transform: translate(-50%, -50%) scale(0.85);
+}
+
+.center-name {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    color: var(--text-primary);
+    line-height: 1;
+    margin-bottom: 12px;
+    text-shadow: 0 0 60px rgba(255, 255, 255, 0.06);
+}
+
+.center-title {
+    font-size: clamp(0.75rem, 1.5vw, 1rem);
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+
+/* ── Spatial Node ── */
+.spatial-node {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    z-index: 20;
+    transition:
+        transform 0.7s var(--ease-out-expo),
+        opacity 0.5s var(--ease-smooth),
+        filter 0.5s var(--ease-smooth);
+    will-change: transform, opacity;
+}
+
+.spatial-node__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 120px;
+    height: 120px;
+    background: rgba(20, 20, 20, 0.6);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    transition:
+        background 0.4s var(--ease-smooth),
+        border-color 0.4s var(--ease-smooth),
+        box-shadow 0.4s var(--ease-smooth),
+        transform 0.5s var(--ease-out-expo);
+    user-select: none;
+}
+
+.spatial-node__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    font-size: 1.8rem;
+    line-height: 1;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+.spatial-node__label {
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+}
+
+/* Hover */
+.spatial-node:hover .spatial-node__inner {
+    background: rgba(26, 26, 26, 0.8);
+    border-color: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 0 40px var(--glow), 0 8px 30px rgba(0, 0, 0, 0.4);
+    transform: scale(1.08);
+}
+
+.spatial-node:hover .spatial-node__icon {
+    opacity: 1;
+}
+
+.spatial-node:hover .spatial-node__label {
+    color: var(--text-primary);
+}
+
+/* Hub hover state — dim siblings */
+.spatial-hub--has-hover .spatial-node {
+    opacity: 0.3;
+    filter: blur(1px);
+}
+
+.spatial-hub--has-hover .spatial-node--hovered {
+    opacity: 1;
+    filter: none;
+}
+
+/* Focused state — depth controlled via inline styles */
+.spatial-hub--focused .spatial-node {
+    pointer-events: none;
+}
+
+.spatial-hub--focused .spatial-node--active {
+    pointer-events: none;
+    animation: none;
+}
+
+/* Idle showcase — gentle sequential highlight */
+.spatial-node--showcased .spatial-node__inner {
+    background: rgba(26, 26, 26, 0.75);
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.06), 0 0 60px rgba(255, 255, 255, 0.03);
+    transform: scale(1.06);
+}
+
+.spatial-node--showcased .spatial-node__icon {
+    opacity: 0.9;
+}
+
+.spatial-node--showcased .spatial-node__label {
+    color: var(--text-primary);
+}
+
+/* ── Focus Panel ── */
+.focus-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.5s var(--ease-smooth);
+}
+
+.focus-panel {
+    position: relative;
+    width: min(560px, 90vw);
+    max-height: 80vh;
+    overflow-y: auto;
+    background: rgba(18, 18, 18, 0.92);
+    backdrop-filter: blur(40px);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 48px 44px;
+    box-shadow:
+        0 0 80px rgba(0, 0, 0, 0.6),
+        0 0 40px var(--glow);
+    transform-origin: var(--origin-x, 50%) var(--origin-y, 50%);
+    animation: panelZoomIn 0.7s var(--ease-out-expo);
+}
+
+@keyframes panelZoomIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.3);
+        filter: blur(8px);
     }
 
-    html {
-        scroll-behavior: smooth;
+    50% {
+        opacity: 0.8;
+        filter: blur(2px);
     }
 
-    body {
-        @apply bg-dark-300 text-gray-100 font-sans antialiased;
-        overflow-x: hidden;
-        min-height: 100vh;
-    }
-
-    /* Hide default cursor on desktop for custom cursor */
-    @media (min-width: 768px) {
-        * {
-            cursor: none !important;
-        }
-    }
-
-    /* Custom scrollbar */
-    ::-webkit-scrollbar {
-        width: 8px;
-    }
-
-    ::-webkit-scrollbar-track {
-        @apply bg-dark-200;
-    }
-
-    ::-webkit-scrollbar-thumb {
-        @apply bg-tech-blue-700 rounded-full;
-    }
-
-    ::-webkit-scrollbar-thumb:hover {
-        @apply bg-tech-blue-600;
+    100% {
+        opacity: 1;
+        transform: scale(1);
+        filter: blur(0);
     }
 }
 
-@layer components {
+/* Close button */
+.focus-panel__close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    z-index: 10;
+}
 
-    /* Glass morphism card */
-    .glass-card {
-        @apply bg-dark-50/80 backdrop-blur-xl border border-white/10 rounded-2xl;
-        box-shadow:
-            0 0 20px rgba(255, 255, 255, 0.05),
-            inset 0 0 20px rgba(255, 255, 255, 0.02);
-    }
+.focus-panel__close:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--text-primary);
+    border-color: rgba(255, 255, 255, 0.15);
+}
 
-    /* Desk item base */
-    .desk-item {
-        @apply relative cursor-pointer transition-all duration-500 ease-out;
-    }
+/* Panel header */
+.focus-panel__icon {
+    font-size: 2rem;
+    margin-bottom: 8px;
+    opacity: 0.6;
+}
 
-    .desk-item:hover {
-        @apply scale-105;
-        filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.15));
-    }
+.focus-panel__title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+}
 
-    /* LED indicator */
-    .led-online {
-        @apply w-2 h-2 rounded-full bg-gray-400;
-        animation: led-blink 1.5s ease-in-out infinite;
-    }
+.focus-panel__divider {
+    width: 40px;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.12);
+    margin-bottom: 28px;
+}
 
-    @keyframes led-blink {
+/* Panel body — progressive reveal */
+.focus-panel__body p {
+    font-size: 0.92rem;
+    line-height: 1.75;
+    color: var(--text-secondary);
+    margin-bottom: 14px;
+    opacity: 0;
+    transform: translateY(12px);
+    animation: contentIn 0.5s var(--ease-out-expo) forwards;
+}
 
-        0%,
-        100% {
-            opacity: 1;
-            box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
-        }
+.focus-panel__body p:nth-child(1) {
+    animation-delay: 0.1s;
+}
 
-        50% {
-            opacity: 0.6;
-            box-shadow: 0 0 4px rgba(255, 255, 255, 0.4);
-        }
-    }
+.focus-panel__body p:nth-child(2) {
+    animation-delay: 0.2s;
+}
 
-    @keyframes gradient-shift {
+.focus-panel__body p:nth-child(3) {
+    animation-delay: 0.3s;
+}
 
-        0%,
-        100% {
-            background-position: 0% 50%;
-        }
+.focus-panel__body p:nth-child(4) {
+    animation-delay: 0.4s;
+}
 
-        50% {
-            background-position: 100% 50%;
-        }
-    }
+.focus-panel__body p:nth-child(5) {
+    animation-delay: 0.5s;
+}
 
-    /* Terminal text effect */
-    .terminal-text {
-        @apply font-mono text-gray-400;
-    }
+.focus-panel__body p:nth-child(6) {
+    animation-delay: 0.6s;
+}
 
-    .terminal-cursor {
-        @apply inline-block w-2 h-5 bg-gray-400 ml-1;
-        animation: cursor-blink 1s step-end infinite;
-    }
-
-    @keyframes cursor-blink {
-
-        0%,
-        100% {
-            opacity: 1;
-        }
-
-        50% {
-            opacity: 0;
-        }
-    }
-
-    /* Blueprint grid overlay */
-    .blueprint-grid {
-        background-image:
-            linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-        background-size: 20px 20px;
-    }
-
-    /* Steam particles */
-    .steam-particle {
-        @apply absolute w-3 h-3 bg-white/20 rounded-full blur-sm;
-        animation: steam 3s ease-in-out infinite;
-    }
-
-    .steam-particle:nth-child(2) {
-        animation-delay: 0.5s;
-        left: 40%;
-    }
-
-    .steam-particle:nth-child(3) {
-        animation-delay: 1s;
-        left: 60%;
+@keyframes contentIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
 
-@layer utilities {
+/* Links */
+.focus-panel__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 24px;
+    opacity: 0;
+    animation: contentIn 0.5s var(--ease-out-expo) 0.5s forwards;
+}
 
-    /* Text gradient */
-    .text-gradient-blue {
-        @apply bg-gradient-to-r from-gray-300 via-gray-100 to-gray-400 bg-clip-text text-transparent;
+.focus-panel__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-decoration: none;
+    letter-spacing: 0.03em;
+    transition: all 0.25s ease;
+    cursor: pointer;
+}
+
+.focus-panel__link:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.15);
+    color: var(--text-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+.focus-panel__link-icon {
+    font-size: 1rem;
+}
+
+/* Hint at bottom */
+.focus-panel__hint {
+    margin-top: 28px;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    text-align: center;
+    letter-spacing: 0.04em;
+    opacity: 0;
+    animation: contentIn 0.5s var(--ease-out-expo) 0.7s forwards;
+}
+
+.focus-panel__hint kbd {
+    display: inline-block;
+    padding: 2px 8px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-family: 'Inter', monospace;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+}
+
+/* Panel scrollbar */
+.focus-panel::-webkit-scrollbar {
+    width: 4px;
+}
+
+.focus-panel::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.focus-panel::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+}
+
+/* ── Animations ── */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
     }
 
-    /* Glow effects */
-    .glow-blue {
-        filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
+    to {
+        opacity: 1;
+    }
+}
+
+/* ── Subtle grid/dots background ── */
+.spatial-hub::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+    background-size: 32px 32px;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+    .center-name {
+        font-size: 2rem;
+        letter-spacing: 0.15em;
     }
 
-    /* Code block styling */
-    .code-block {
-        @apply bg-dark-300 border border-white/10 rounded-lg p-4 font-mono text-sm overflow-x-auto;
+    .center-title {
+        font-size: 0.7rem;
     }
 
-    .code-block .keyword {
-        @apply text-gray-300;
+    .spatial-node__inner {
+        width: 72px;
+        height: 72px;
+        gap: 8px;
+        border-radius: 16px;
     }
 
-    .code-block .string {
-        @apply text-gray-400;
+    .spatial-node__icon {
+        width: 22px;
+        height: 22px;
+        font-size: 1.1rem;
     }
 
-    .code-block .comment {
-        @apply text-gray-500;
+    .spatial-node__label {
+        font-size: 0.7rem;
     }
 
-    /* Name gradient animation - subtle to match aurora */
-    .name-gradient {
-        animation: gradient-shift 12s ease-in-out infinite;
+    .focus-panel {
+        padding: 32px 28px;
+        border-radius: 18px;
     }
 }
