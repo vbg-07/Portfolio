@@ -2,38 +2,50 @@ import { type SectionData } from '../data/portfolioData'
 
 interface FocusPanelProps {
     section: SectionData
-    originX: number // % position of source node
-    originY: number // % position of source node
+    offsetX: number   // px offset from center
+    offsetY: number   // px offset from center
+    isClosing: boolean
     onClose: () => void
 }
 
-export default function FocusPanel({ section, originX, originY, onClose }: FocusPanelProps) {
+export default function FocusPanel({ section, offsetX, offsetY, isClosing, onClose }: FocusPanelProps) {
     const handleBackdropClick = (e: React.MouseEvent) => {
-        if (e.target === e.currentTarget) {
-            onClose()
-        }
+        if (e.target === e.currentTarget && !isClosing) onClose()
     }
 
+    const backdropClasses = [
+        'focus-backdrop',
+        isClosing ? 'focus-backdrop--closing' : '',
+    ].filter(Boolean).join(' ')
+
+    const panelClasses = [
+        'focus-panel',
+        isClosing ? 'focus-panel--closing' : '',
+    ].filter(Boolean).join(' ')
+
     return (
-        <div
-            className="focus-backdrop"
-            onClick={handleBackdropClick}
-            style={{
-                // Panel emerges from the node's position
-                ['--origin-x' as string]: `${originX}%`,
-                ['--origin-y' as string]: `${originY}%`,
-            }}
-        >
-            <div className="focus-panel">
+        <div className={backdropClasses} onClick={handleBackdropClick}>
+            <div
+                className={panelClasses}
+                style={{
+                    ['--offset-x' as string]: `${offsetX}px`,
+                    ['--offset-y' as string]: `${offsetY}px`,
+                    ['--accent' as string]: section.planetColor,
+                }}
+            >
                 <button
                     className="focus-panel__close"
-                    onClick={onClose}
+                    onClick={() => !isClosing && onClose()}
                     aria-label="Close"
                 >
                     ✕
                 </button>
 
-                <div className="focus-panel__icon">{section.icon}</div>
+                <div
+                    className="focus-panel__accent-bar"
+                    style={{ background: section.planetColor }}
+                />
+
                 <h2 className="focus-panel__title">{section.card.title}</h2>
                 <div className="focus-panel__divider" />
 
@@ -53,9 +65,7 @@ export default function FocusPanel({ section, originX, originY, onClose }: Focus
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
-                                {link.icon && (
-                                    <span className="focus-panel__link-icon">{link.icon}</span>
-                                )}
+                                {link.icon && <span className="focus-panel__link-icon">{link.icon}</span>}
                                 {link.label}
                             </a>
                         ))}

@@ -13,9 +13,11 @@ export interface CardContent {
 export interface SectionData {
     id: string
     label: string
-    icon: React.ReactNode
-    angle: number // orbital position in degrees (0 = top, clockwise)
-    depth: number // translateZ offset in px (positive = closer to camera)
+    startAngle: number
+    orbitRadius: number
+    orbitDuration: number   // seconds for one full orbit (30–60)
+    planetSize: number
+    planetColor: string
     card: CardContent
 }
 
@@ -26,13 +28,11 @@ export const sections: SectionData[] = [
     {
         id: 'about',
         label: 'About',
-        icon: (
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" >
-                <circle cx="12" cy="12" r="10" />
-            </svg>
-        ),
-        angle: 0,
-        depth: 30,
+        startAngle: 0,
+        orbitRadius: 18,
+        orbitDuration: 35,
+        planetSize: 38,
+        planetColor: 'hsl(210, 30%, 55%)',
         card: {
             title: 'About Me',
             description: [
@@ -50,13 +50,11 @@ export const sections: SectionData[] = [
     {
         id: 'projects',
         label: 'Projects',
-        icon: (
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" >
-                <path d="M12 2L2 22h20L12 2z" />
-            </svg>
-        ),
-        angle: 90,
-        depth: -20,
+        startAngle: 90,
+        orbitRadius: 28,
+        orbitDuration: 45,
+        planetSize: 48,
+        planetColor: 'hsl(30, 35%, 55%)',
         card: {
             title: 'Projects',
             description: [
@@ -74,13 +72,11 @@ export const sections: SectionData[] = [
     {
         id: 'skills',
         label: 'Skills',
-        icon: (
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" >
-                <path d="M12 2l10 10-10 10L2 12 12 2z" />
-            </svg>
-        ),
-        angle: 180,
-        depth: 15,
+        startAngle: 200,
+        orbitRadius: 36,
+        orbitDuration: 55,
+        planetSize: 32,
+        planetColor: 'hsl(170, 25%, 50%)',
         card: {
             title: 'Skills',
             description: [
@@ -96,13 +92,11 @@ export const sections: SectionData[] = [
     {
         id: 'contact',
         label: 'Contact',
-        icon: (
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" >
-                <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-            </svg>
-        ),
-        angle: 270,
-        depth: -35,
+        startAngle: 310,
+        orbitRadius: 44,
+        orbitDuration: 60,
+        planetSize: 28,
+        planetColor: 'hsl(260, 25%, 55%)',
         card: {
             title: 'Contact',
             description: [
