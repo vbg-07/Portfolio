@@ -68,7 +68,7 @@ export default function ProjectSystem({ isClosing, onExit, satellitesVisible }: 
         setTimeout(() => {
             setFocusedProject(null)
             setIsPanelClosing(false)
-        }, 600)
+        }, 850)
     }, [isPanelClosing])
 
     // ESC handling: close panel first, then exit system

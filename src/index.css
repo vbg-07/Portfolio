@@ -1209,7 +1209,7 @@ body,
 }
 
 .proj-backdrop--closing {
-    animation: fadeOut 0.6s var(--ease-smooth) forwards;
+    animation: fadeOut 0.8s var(--ease-smooth) forwards;
 }
 
 .proj-panel {
@@ -1229,7 +1229,7 @@ body,
 }
 
 .proj-panel--closing {
-    animation: panelCollapse 0.6s var(--ease-cinematic) forwards;
+    animation: panelCollapse 0.8s var(--ease-cinematic) forwards;
 }
 
 .proj-panel__close {
