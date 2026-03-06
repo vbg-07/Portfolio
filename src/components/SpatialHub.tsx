@@ -255,6 +255,7 @@ export default function SpatialHub() {
                 }}>
                     <div className="star-glow" />
                     <div className="star-glow star-glow--inner" />
+                    <div className="star-glow star-glow--halo" />
                     <h1 className="star-name">{PLAYER_NAME}</h1>
                     <p className="star-title">{PLAYER_TITLE}</p>
                 </div>

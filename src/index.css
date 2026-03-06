@@ -348,14 +348,14 @@ body,
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 200px;
-    height: 200px;
+    width: 280px;
+    height: 280px;
     border-radius: 50%;
     background:
         radial-gradient(circle,
-            rgba(212, 165, 116, 0.18) 0%,
-            rgba(212, 165, 116, 0.08) 25%,
-            rgba(200, 180, 150, 0.03) 50%,
+            rgba(212, 165, 116, 0.24) 0%,
+            rgba(212, 165, 116, 0.12) 25%,
+            rgba(200, 180, 150, 0.05) 50%,
             transparent 70%);
     filter: blur(25px);
     animation: starPulse 8s ease-in-out infinite alternate;
@@ -367,11 +367,24 @@ body,
     height: 100px;
     background:
         radial-gradient(circle,
-            rgba(240, 220, 190, 0.2) 0%,
-            rgba(220, 195, 160, 0.08) 40%,
+            rgba(240, 220, 190, 0.25) 0%,
+            rgba(220, 195, 160, 0.1) 40%,
             transparent 70%);
     filter: blur(12px);
     animation: starPulseInner 6s ease-in-out infinite alternate-reverse;
+}
+
+.star-glow--halo {
+    width: 400px;
+    height: 400px;
+    background:
+        radial-gradient(circle,
+            rgba(212, 165, 116, 0.06) 0%,
+            rgba(200, 180, 150, 0.03) 30%,
+            rgba(180, 160, 140, 0.01) 55%,
+            transparent 75%);
+    filter: blur(40px);
+    animation: starPulse 12s ease-in-out infinite alternate;
 }
 
 @keyframes starPulse {
@@ -413,8 +426,9 @@ body,
     position: relative;
     z-index: 2;
     text-shadow:
-        0 0 40px rgba(212, 165, 116, 0.15),
-        0 0 80px rgba(212, 165, 116, 0.06);
+        0 0 30px rgba(212, 165, 116, 0.25),
+        0 0 60px rgba(212, 165, 116, 0.12),
+        0 0 120px rgba(200, 180, 150, 0.06);
 }
 
 .star-title {
@@ -425,6 +439,9 @@ body,
     text-transform: uppercase;
     position: relative;
     z-index: 2;
+    text-shadow:
+        0 0 20px rgba(212, 165, 116, 0.08),
+        0 0 50px rgba(200, 180, 150, 0.04);
 }
 
 /* ========================================
@@ -572,34 +589,43 @@ body,
     filter: none;
 }
 
-/* ── Active (clicked, expanding before panel) ── */
+/* ── Active (clicked, settling behind panel) ── */
 .planet--active {
     pointer-events: none;
 }
 
 .planet--active .planet__body {
-    animation: planetExpand 0.8s var(--ease-cinematic) forwards;
+    animation: planetSettle 0.9s var(--ease-cinematic) forwards;
 }
 
-.planet--active .planet__label,
-.planet--active .planet__glow {
+.planet--active .planet__label {
     animation: fadeOutQuick 0.4s var(--ease-smooth) forwards;
 }
 
-@keyframes planetExpand {
+.planet--active .planet__glow {
+    animation: glowDim 0.6s var(--ease-smooth) forwards;
+}
+
+@keyframes planetSettle {
     0% {
         transform: scale(1);
         opacity: 1;
     }
 
-    35% {
-        transform: scale(1.4);
-        opacity: 0.9;
+    40% {
+        transform: scale(1.15);
+        opacity: 0.6;
     }
 
     100% {
-        transform: scale(1.6);
-        opacity: 0;
+        transform: scale(0.9);
+        opacity: 0.15;
+    }
+}
+
+@keyframes glowDim {
+    to {
+        opacity: 0.05;
     }
 }
 
@@ -920,6 +946,11 @@ body,
     .star-glow--inner {
         width: 60px;
         height: 60px;
+    }
+
+    .star-glow--halo {
+        width: 200px;
+        height: 200px;
     }
 
     .planet__label {
