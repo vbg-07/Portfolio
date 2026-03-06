@@ -1129,12 +1129,15 @@ body,
 }
 
 .satellite--active .satellite__body {
-    animation: planetExpand 0.7s var(--ease-cinematic) forwards;
+    animation: planetSettle 0.7s var(--ease-cinematic) forwards;
 }
 
-.satellite--active .satellite__label,
-.satellite--active .satellite__glow {
+.satellite--active .satellite__label {
     animation: fadeOutQuick 0.3s var(--ease-smooth) forwards;
+}
+
+.satellite--active .satellite__glow {
+    animation: glowDim 0.4s var(--ease-smooth) forwards;
 }
 
 /* Receded satellites */

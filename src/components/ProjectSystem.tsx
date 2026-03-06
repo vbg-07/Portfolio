@@ -48,14 +48,14 @@ export default function ProjectSystem({ isClosing, onExit, satellitesVisible }: 
         }
     }, [focusedProject, hoveredId, satellitesVisible])
 
-    const handleSatelliteClick = useCallback((project: ProjectData) => {
-        const idx = projects.findIndex((p: ProjectData) => p.id === project.id)
-        if (idx < 0) return
-        const angle = anglesRef.current[idx]
-        const rad = (angle * Math.PI) / 180
-        const vmin = Math.min(window.innerWidth, window.innerHeight) / 100
-        const ox = Math.sin(rad) * project.orbitRadius * vmin
-        const oy = -Math.cos(rad) * project.orbitRadius * vmin
+    const handleSatelliteClick = useCallback((project: ProjectData, e: React.MouseEvent) => {
+        // Use the satellite's actual screen position
+        const satEl = e.currentTarget as HTMLElement
+        const rect = satEl.getBoundingClientRect()
+        const centerX = rect.left + rect.width / 2
+        const centerY = rect.top + rect.height / 2
+        const ox = centerX - window.innerWidth / 2
+        const oy = centerY - window.innerHeight / 2
 
         setFocusedProject(project)
         setHoveredId(null)
@@ -149,7 +149,7 @@ export default function ProjectSystem({ isClosing, onExit, satellitesVisible }: 
                                 onMouseLeave={() => !focusedProject && setHoveredId(null)}
                                 onClick={(e) => {
                                     e.stopPropagation()
-                                    if (!focusedProject) handleSatelliteClick(proj)
+                                    if (!focusedProject) handleSatelliteClick(proj, e)
                                 }}
                             >
                                 <div className="satellite__glow" />
