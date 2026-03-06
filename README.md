@@ -69,7 +69,7 @@ src/
 docker compose up --build
 ```
 
-This builds the production bundle and serves it via Nginx on port `80`.
+This builds the production bundle and serves it via Nginx at `http://localhost:3000`.
 
 ## 📝 License
 
