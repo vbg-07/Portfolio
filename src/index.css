@@ -1408,8 +1408,8 @@ body,
 .arch-diagram__svg {
     width: 100%;
     height: auto;
-    max-height: 120px;
-    color: var(--text-muted);
+    max-height: 240px;
+    color: var(--text-secondary);
 }
 
 /* Animated connection lines */
@@ -1448,8 +1448,8 @@ body,
 }
 
 .arch-diagram__label {
-    font-size: 2.8px;
+    font-size: 3.5px;
     font-weight: 500;
     letter-spacing: 0.02em;
-    fill: var(--text-muted);
+    fill: var(--text-secondary);
 }

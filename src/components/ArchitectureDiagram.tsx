@@ -21,7 +21,7 @@ export default function ArchitectureDiagram({ nodes, connections, color }: Archi
                         refY="2"
                         orient="auto"
                     >
-                        <polygon points="0 0, 6 2, 0 4" fill={color} opacity="0.4" />
+                        <polygon points="0 0, 6 2, 0 4" fill={color} opacity="0.6" />
                     </marker>
                 </defs>
 
@@ -40,8 +40,8 @@ export default function ArchitectureDiagram({ nodes, connections, color }: Archi
                             x2={to.x}
                             y2={to.y}
                             stroke={color}
-                            strokeWidth="0.4"
-                            strokeOpacity="0.25"
+                            strokeWidth="0.6"
+                            strokeOpacity="0.45"
                             markerEnd="url(#arrowhead)"
                             style={{
                                 animationDelay: `${i * 0.3}s`,
@@ -57,10 +57,10 @@ export default function ArchitectureDiagram({ nodes, connections, color }: Archi
                             cx={node.x}
                             cy={node.y}
                             r="3.5"
-                            fill="rgba(255,255,255,0.04)"
+                            fill="rgba(255,255,255,0.08)"
                             stroke={color}
-                            strokeWidth="0.4"
-                            strokeOpacity="0.35"
+                            strokeWidth="0.6"
+                            strokeOpacity="0.55"
                         />
                         <text
                             x={node.x}
