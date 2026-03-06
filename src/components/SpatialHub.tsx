@@ -29,6 +29,10 @@ export default function SpatialHub() {
     const [isClosing, setIsClosing] = useState(false)
     const [activeNodePos, setActiveNodePos] = useState<{ x: number; y: number } | null>(null)
 
+    // Projects-specific: sequenced satellite reveal
+    const [projectsCentered, setProjectsCentered] = useState(false)
+    const [satellitesVisible, setSatellitesVisible] = useState(false)
+
     const anglesRef = useRef<number[]>(sections.map(s => s.startAngle))
     const [angles, setAngles] = useState<number[]>(() => sections.map(s => s.startAngle))
 
@@ -52,17 +56,37 @@ export default function SpatialHub() {
         setFocusedId(id)
         setHoveredId(null)
         setActiveNodePos({ x: offsetX, y: offsetY })
+
+        // Projects: sequence planet center → satellites
+        if (id === 'projects') {
+            setProjectsCentered(true)
+            setTimeout(() => setSatellitesVisible(true), 900)
+        }
     }, [])
 
     const handleClose = useCallback(() => {
         if (isClosing) return
         setIsClosing(true)
-        setTimeout(() => {
-            setFocusedId(null)
-            setActiveNodePos(null)
-            setIsClosing(false)
-        }, 700)
-    }, [isClosing])
+
+        // Projects: fade satellites first, then return planet
+        if (focusedId === 'projects') {
+            setSatellitesVisible(false)
+            setTimeout(() => {
+                setProjectsCentered(false)
+                setTimeout(() => {
+                    setFocusedId(null)
+                    setActiveNodePos(null)
+                    setIsClosing(false)
+                }, 700)
+            }, 400)
+        } else {
+            setTimeout(() => {
+                setFocusedId(null)
+                setActiveNodePos(null)
+                setIsClosing(false)
+            }, 700)
+        }
+    }, [isClosing, focusedId])
 
     const handleHover = useCallback((id: string | null) => {
         if (!focusedId) setHoveredId(id)
@@ -99,8 +123,16 @@ export default function SpatialHub() {
             const newAngles = anglesRef.current.map((angle, i) => {
                 const speed = 360 / sections[i].orbitDuration
                 let mult = 1
-                if (focusedId) mult = 0.02
-                else if (hoveredId === sections[i].id) mult = 0.1
+                if (focusedId) {
+                    // Projects planet: stop orbit entirely when centered
+                    if (focusedId === 'projects' && sections[i].id === 'projects' && projectsCentered) {
+                        mult = 0
+                    } else {
+                        mult = 0.02
+                    }
+                } else if (hoveredId === sections[i].id) {
+                    mult = 0.1
+                }
                 return angle + speed * delta * mult
             })
             anglesRef.current = newAngles
@@ -116,23 +148,29 @@ export default function SpatialHub() {
         }
         animRef.current = requestAnimationFrame(animate)
         return () => cancelAnimationFrame(animRef.current)
-    }, [focusedId, hoveredId])
+    }, [focusedId, hoveredId, projectsCentered])
 
     const focusedSection = focusedId ? sections.find(s => s.id === focusedId) ?? null : null
+    const isProjectsMode = focusedId === 'projects'
 
-    // Scene transform: zoom toward planet on focus, tilt on idle
+    // Scene transform: depth zoom for projects, standard zoom for others
     let sceneTransform: string
     if (focusedId && !isClosing) {
-        const idx = sections.findIndex(s => s.id === focusedId)
-        if (idx >= 0) {
-            const angle = anglesRef.current[idx]
-            const rad = (angle * Math.PI) / 180
-            const section = sections[idx]
-            const ox = Math.sin(rad) * section.orbitRadius
-            const oy = -Math.cos(rad) * section.orbitRadius
-            sceneTransform = `scale(1.6) translate(${-ox * 0.5}vmin, ${-oy * 0.5}vmin)`
+        if (isProjectsMode) {
+            // Camera travels toward center with depth
+            sceneTransform = `scale(1.15) translateZ(60px)`
         } else {
-            sceneTransform = `rotateY(${mouseX * 1.2}deg) rotateX(${mouseY * -0.8}deg)`
+            const idx = sections.findIndex(s => s.id === focusedId)
+            if (idx >= 0) {
+                const angle = anglesRef.current[idx]
+                const rad = (angle * Math.PI) / 180
+                const section = sections[idx]
+                const ox = Math.sin(rad) * section.orbitRadius
+                const oy = -Math.cos(rad) * section.orbitRadius
+                sceneTransform = `scale(1.6) translate(${-ox * 0.5}vmin, ${-oy * 0.5}vmin)`
+            } else {
+                sceneTransform = `rotateY(${mouseX * 1.2}deg) rotateX(${mouseY * -0.8}deg)`
+            }
         }
     } else {
         sceneTransform = `rotateY(${mouseX * 1.2}deg) rotateX(${mouseY * -0.8}deg)`
@@ -142,6 +180,7 @@ export default function SpatialHub() {
         'solar-hub',
         hoveredId ? 'solar-hub--has-hover' : '',
         focusedId ? 'solar-hub--focused' : '',
+        isProjectsMode && !isClosing ? 'solar-hub--projects-mode' : '',
     ].filter(Boolean).join(' ')
 
     return (
@@ -178,11 +217,14 @@ export default function SpatialHub() {
                 {sections.map((section, i) => {
                     const isThisHovered = hoveredId === section.id
                     const isThisFocused = focusedId === section.id
+                    const isThisProjectsCentered = section.id === 'projects' && projectsCentered
+
                     const ringClasses = [
                         'orbit-ring',
                         isThisHovered ? 'orbit-ring--hover' : '',
                         isThisFocused ? 'orbit-ring--focus' : '',
                         focusedId && !isThisFocused ? 'orbit-ring--dimmed' : '',
+                        isThisProjectsCentered ? 'orbit-ring--hidden' : '',
                     ].filter(Boolean).join(' ')
 
                     return (
@@ -198,6 +240,7 @@ export default function SpatialHub() {
                                     isHovered={isThisHovered}
                                     isFocused={!!focusedId}
                                     isActive={isThisFocused}
+                                    isProjectsCentered={isThisProjectsCentered}
                                     onHover={handleHover}
                                     onClick={handleFocus}
                                 />
@@ -217,11 +260,12 @@ export default function SpatialHub() {
                 </div>
             </div>
 
-            {focusedSection && activeNodePos && focusedId === 'projects' && (
+            {/* Projects satellite system: overlay without center planet */}
+            {focusedId === 'projects' && (
                 <ProjectSystem
                     isClosing={isClosing}
                     onExit={handleClose}
-                    planetColor={focusedSection.planetColor}
+                    satellitesVisible={satellitesVisible}
                 />
             )}
 

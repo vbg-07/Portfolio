@@ -5,10 +5,10 @@ import ProjectPanel from './ProjectPanel'
 interface ProjectSystemProps {
     isClosing: boolean
     onExit: () => void
-    planetColor: string
+    satellitesVisible: boolean
 }
 
-export default function ProjectSystem({ isClosing, onExit, planetColor }: ProjectSystemProps) {
+export default function ProjectSystem({ isClosing, onExit, satellitesVisible }: ProjectSystemProps) {
     const [hoveredId, setHoveredId] = useState<string | null>(null)
     const [focusedProject, setFocusedProject] = useState<ProjectData | null>(null)
     const [isPanelClosing, setIsPanelClosing] = useState(false)
@@ -22,6 +22,8 @@ export default function ProjectSystem({ isClosing, onExit, planetColor }: Projec
 
     // Animation loop for satellite orbits
     useEffect(() => {
+        if (!satellitesVisible) return
+
         const animate = (time: number) => {
             if (lastTimeRef.current === 0) lastTimeRef.current = time
             const delta = (time - lastTimeRef.current) / 1000
@@ -40,8 +42,11 @@ export default function ProjectSystem({ isClosing, onExit, planetColor }: Projec
             animRef.current = requestAnimationFrame(animate)
         }
         animRef.current = requestAnimationFrame(animate)
-        return () => cancelAnimationFrame(animRef.current)
-    }, [focusedProject, hoveredId])
+        return () => {
+            cancelAnimationFrame(animRef.current)
+            lastTimeRef.current = 0
+        }
+    }, [focusedProject, hoveredId, satellitesVisible])
 
     const handleSatelliteClick = useCallback((project: ProjectData) => {
         const idx = projects.findIndex((p: ProjectData) => p.id === project.id)
@@ -91,6 +96,7 @@ export default function ProjectSystem({ isClosing, onExit, planetColor }: Projec
 
     const containerClasses = [
         'project-system',
+        satellitesVisible ? 'project-system--satellites-in' : '',
         isClosing ? 'project-system--closing' : '',
         focusedProject ? 'project-system--has-focus' : '',
         hoveredId ? 'project-system--has-hover' : '',
@@ -99,17 +105,10 @@ export default function ProjectSystem({ isClosing, onExit, planetColor }: Projec
     return (
         <div className={containerClasses} onClick={handleBackdropClick}>
             <div className="project-system__inner">
-                {/* Center planet (Projects) */}
-                <div className="project-system__center">
-                    <div className="project-system__planet-glow" style={{ background: `radial-gradient(circle, ${planetColor} 0%, transparent 70%)` }} />
-                    <div className="project-system__planet-body" style={{
-                        background: `radial-gradient(circle at 35% 35%, color-mix(in srgb, ${planetColor} 80%, white 20%) 0%, ${planetColor} 50%, color-mix(in srgb, ${planetColor} 70%, black 30%) 100%)`,
-                    }} />
-                    <span className="project-system__planet-label">Projects</span>
-                </div>
+                {/* No center planet — the actual planet from SpatialHub is used */}
 
                 {/* Satellite orbit rings */}
-                {projects.map(proj => (
+                {satellitesVisible && projects.map(proj => (
                     <div key={`ring-${proj.id}`} className={[
                         'sat-ring',
                         hoveredId === proj.id ? 'sat-ring--hover' : '',
@@ -122,7 +121,7 @@ export default function ProjectSystem({ isClosing, onExit, planetColor }: Projec
                 ))}
 
                 {/* Satellite arms */}
-                {projects.map((proj, i) => {
+                {satellitesVisible && projects.map((proj, i) => {
                     const isHovered = hoveredId === proj.id
                     const isActive = focusedProject?.id === proj.id
                     const isReceded = focusedProject !== null && !isActive

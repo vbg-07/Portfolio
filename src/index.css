@@ -237,6 +237,32 @@ body,
     opacity: 0.3;
 }
 
+/* Projects mode: scene stays visible, camera depth zoom */
+.solar-hub--projects-mode .solar-hub__scene {
+    opacity: 1;
+}
+
+/* Dim stars in projects mode */
+.solar-hub--projects-mode .starfield {
+    opacity: 0.25;
+    transition: opacity 1.2s var(--ease-smooth);
+}
+
+.solar-hub--projects-mode .twinkle-star,
+.solar-hub--projects-mode .dust-particle {
+    opacity: 0 !important;
+}
+
+.solar-hub--projects-mode .nebula-layer {
+    opacity: 0.3;
+}
+
+/* Hide the central star name in projects mode */
+.solar-hub--projects-mode.solar-hub--focused .solar-hub__star {
+    opacity: 0;
+    transition: opacity 1s var(--ease-smooth);
+}
+
 /* ========================================
    ORBIT — container for ring + arm
    ======================================== */
@@ -277,6 +303,12 @@ body,
 
 .orbit-ring--dimmed {
     opacity: 0.2;
+}
+
+.orbit-ring--hidden {
+    opacity: 0;
+    border-color: transparent;
+    box-shadow: none;
 }
 
 /* ── Orbit Arm — rotates to carry planet ── */
@@ -410,7 +442,7 @@ body,
     z-index: 10;
     pointer-events: auto;
     transition:
-        transform 0.8s var(--ease-cinematic),
+        transform 0.9s var(--ease-cinematic),
         opacity 0.7s var(--ease-smooth),
         filter 0.7s var(--ease-smooth);
     will-change: transform;
@@ -418,6 +450,12 @@ body,
     margin-top: calc(var(--planet-size, 36px) / -2 - 5px);
     margin-left: calc(var(--planet-size, 36px) / -2);
 }
+
+.planet--projects-center {
+    z-index: 50;
+    pointer-events: none;
+}
+
 
 /* ── Glow halo ── */
 .planet__glow {
@@ -885,11 +923,6 @@ body,
         padding: 30px 24px;
         border-radius: 16px;
     }
-
-    .project-system__planet-body {
-        width: 40px;
-        height: 40px;
-    }
 }
 
 /* ========================================
@@ -902,63 +935,18 @@ body,
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(6, 6, 16, 0.85);
-    backdrop-filter: blur(8px);
-    animation: fadeIn 0.6s var(--ease-smooth);
+    background: transparent;
+    pointer-events: none;
 }
 
-.project-system--closing {
-    animation: fadeOut 0.7s var(--ease-smooth) forwards;
+.project-system--satellites-in {
+    pointer-events: auto;
 }
 
 .project-system__inner {
     position: relative;
     width: 100%;
     height: 100%;
-}
-
-/* ── Center planet ── */
-.project-system__center {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-    z-index: 5;
-    pointer-events: none;
-}
-
-.project-system__planet-glow {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -65%);
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    opacity: 0.15;
-    filter: blur(20px);
-    animation: starPulse 8s ease-in-out infinite alternate;
-}
-
-.project-system__planet-body {
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    box-shadow:
-        0 0 30px rgba(255, 255, 255, 0.06),
-        inset -4px -4px 12px rgba(0, 0, 0, 0.4);
-}
-
-.project-system__planet-label {
-    font-size: 0.8rem;
-    font-weight: 600;
-    letter-spacing: 0.15em;
-    color: var(--text-secondary);
-    text-transform: uppercase;
 }
 
 /* ── Satellite orbit rings ── */
