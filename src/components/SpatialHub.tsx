@@ -43,15 +43,17 @@ export default function SpatialHub() {
     const animRef = useRef<number>(0)
     const lastTimeRef = useRef<number>(0)
 
-    const handleFocus = useCallback((id: string) => {
+    const handleFocus = useCallback((id: string, e: React.MouseEvent) => {
         const idx = sections.findIndex(s => s.id === id)
         if (idx < 0) return
-        const section = sections[idx]
-        const angle = anglesRef.current[idx]
-        const rad = (angle * Math.PI) / 180
-        const vmin = Math.min(window.innerWidth, window.innerHeight) / 100
-        const offsetX = Math.sin(rad) * section.orbitRadius * vmin
-        const offsetY = -Math.cos(rad) * section.orbitRadius * vmin
+
+        // Use the planet's actual screen position instead of orbital math
+        const planetEl = e.currentTarget as HTMLElement
+        const rect = planetEl.getBoundingClientRect()
+        const centerX = rect.left + rect.width / 2
+        const centerY = rect.top + rect.height / 2
+        const offsetX = centerX - window.innerWidth / 2
+        const offsetY = centerY - window.innerHeight / 2
 
         setFocusedId(id)
         setHoveredId(null)

@@ -8,7 +8,7 @@ interface SpatialNodeProps {
     isActive: boolean
     isProjectsCentered: boolean  // projects planet smoothly at center
     onHover: (id: string | null) => void
-    onClick: (id: string) => void
+    onClick: (id: string, e: React.MouseEvent) => void
 }
 
 export default function SpatialNode({
@@ -52,7 +52,7 @@ export default function SpatialNode({
             } as React.CSSProperties}
             onMouseEnter={() => !isFocused && onHover(section.id)}
             onMouseLeave={() => !isFocused && onHover(null)}
-            onClick={() => !isFocused && onClick(section.id)}
+            onClick={(e) => !isFocused && onClick(section.id, e)}
         >
             <div className="planet__glow" />
             <div className="planet__body" />
