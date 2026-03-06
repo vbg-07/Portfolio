@@ -28,8 +28,8 @@ export default function SpatialNode({
             ? section.orbitRadius * 0.92
             : section.orbitRadius
 
-    // Counter-rotate to keep label upright; at center, no counter needed
-    const counterAngle = isProjectsCentered ? 0 : -currentAngle
+    // Counter-rotate to keep label upright
+    const counterAngle = -currentAngle
 
     // Scale up when it becomes the projects center star
     const scale = isProjectsCentered ? 1.35 : 1
@@ -56,7 +56,7 @@ export default function SpatialNode({
         >
             <div className="planet__glow" />
             <div className="planet__body" />
-            <span className="planet__label">{section.label}</span>
+            <span className={`planet__label${isProjectsCentered ? ' planet__label--visible' : ''}`}>{section.label}</span>
         </div>
     )
 }
