@@ -138,6 +138,33 @@ export const projects: ProjectData[] = [
             ],
         },
     },
+    {
+        id: 'hybrid-rag',
+        title: 'Hybrid RAG',
+        description: 'High-Performance Local Retrieval-Augmented Generation optimized for scientific document retrieval. Features vector-first hybrid retrieval using ChromaDB and local LLMs without GPU requirements.',
+        technologies: ['Python', 'ChromaDB', 'FastEmbed', 'Ollama', 'BM25'],
+        githubUrl: 'https://github.com/vbg-07/hybrid-rag',
+        orbitRadius: 18,
+        orbitDuration: 32,
+        satelliteSize: 16,
+        color: 'hsl(280, 45%, 60%)',
+        architecture: {
+            nodes: [
+                { id: 'query', label: 'Query', x: 8, y: 50 },
+                { id: 'embed', label: 'FastEmbed', x: 28, y: 50 },
+                { id: 'vector', label: 'ChromaDB', x: 55, y: 35 },
+                { id: 'bm25', label: 'BM25', x: 55, y: 65 },
+                { id: 'llm', label: 'Ollama', x: 88, y: 50 },
+            ],
+            connections: [
+                { from: 'query', to: 'embed' },
+                { from: 'embed', to: 'vector' },
+                { from: 'embed', to: 'bm25' },
+                { from: 'vector', to: 'llm' },
+                { from: 'bm25', to: 'llm' },
+            ],
+        },
+    },
 ]
 
 export const sections: SectionData[] = [
